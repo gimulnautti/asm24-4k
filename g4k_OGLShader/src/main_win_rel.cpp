@@ -72,12 +72,15 @@ void entrypoint( void )
     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
     MSG msg;
+    float currentTime = 0.f;
     do 
     {
         PeekMessage(&msg,hWnd,0,0,true);
+        currentTime += 0.02f;
+        ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
         glRects( -1, -1, 1, 1 );
         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
-        Sleep(50);
+        Sleep(1);
     }while( msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE );
 
     ChangeDisplaySettings( 0, 0 );

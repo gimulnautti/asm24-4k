@@ -50,7 +50,7 @@ static PIXELFORMATDESCRIPTOR pfd =
     };
 
 static WININFO wininfo = {  0,0,0,0,0,
-                            {'i','q','_',0}
+                            {'g','m','l',0}
                             };
 
 #define NUMFUNCIONES 5
