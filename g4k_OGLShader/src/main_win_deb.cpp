@@ -53,7 +53,7 @@ static WININFO wininfo = {  0,0,0,0,0,
                             {'i','q','_',0}
                             };
 
-#define NUMFUNCIONES 4
+#define NUMFUNCIONES 5
 
 static void *myglfunc[NUMFUNCIONES];
 
@@ -61,12 +61,14 @@ static const char *strs[] = {
     "glCreateShaderProgramv",
     "glUseProgram",
     "glGetProgramiv",
-    "glGetProgramInfoLog" };
+    "glGetProgramInfoLog",
+    "glUniform1f", };
 
 #define oglCreateShaderProgramv         ((PFNGLCREATESHADERPROGRAMVPROC)myglfunc[0])
 #define oglUseProgram                   ((PFNGLUSEPROGRAMPROC)myglfunc[1])
 #define oglGetProgramiv                 ((PFNGLGETPROGRAMIVPROC)myglfunc[2])
 #define oglGetProgramInfoLog            ((PFNGLGETPROGRAMINFOLOGPROC)myglfunc[3])
+#define oglUniform1f                    ((PFNGLUNIFORM1FPROC)myglfunc[4])
 
 //==============================================================================================
 
@@ -172,7 +174,7 @@ static int window_init( WININFO *info )
 
     AdjustWindowRect( &rec, dwStyle, 0 );
 
-    info->hWnd = CreateWindowEx( dwExStyle, wc.lpszClassName, "crucio", dwStyle,
+    info->hWnd = CreateWindowEx( dwExStyle, wc.lpszClassName, "4k", dwStyle,
                                (GetSystemMetrics(SM_CXSCREEN)-rec.right+rec.left)>>1,
                                (GetSystemMetrics(SM_CYSCREEN)-rec.bottom+rec.top)>>1,
                                rec.right-rec.left, rec.bottom-rec.top, 0, 0, info->hInstance, 0 );
@@ -212,7 +214,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     info->hInstance = GetModuleHandle( 0 );
 
-  //if( MessageBox( 0, "fullscreen?", info->wndclass, MB_YESNO|MB_ICONQUESTION)==IDYES ) info->full++;
+    //if( MessageBox( 0, "fullscreen?", info->wndclass, MB_YESNO|MB_ICONQUESTION)==IDYES ) info->full++;
 
     if( !window_init(info) )
     {
@@ -242,6 +244,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     oglUseProgram( fsId );
 
+    float currentTime = 0.f;
     while( !done )
     {
         while( PeekMessage(&msg,0,0,0,PM_REMOVE) )
@@ -251,10 +254,13 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
             DispatchMessage( &msg );
         }
+        currentTime += 0.02f;
+
+        oglUniform1f(0, currentTime);
 
         glRects( -1, -1, 1, 1 );
         SwapBuffers( info->hDC );
-        Sleep( 50 ); // give other processes some chance to do something
+        Sleep( 1 ); // give other processes some chance to do something
     }
 
     window_end( info );
