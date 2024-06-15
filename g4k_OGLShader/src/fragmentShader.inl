@@ -23,7 +23,7 @@ static const char* fragmentShader = \
 "h=h+1.0-log2(.5*log(m));"
 "gl_FragColor=vec4(h/100.0);"
 "}";*/
-"#version 330\n"
+"#version 430\n"
 "in vec2 fragCoord;"
 "uniform float iGlobalTime;"
 "out vec4 fragColor;"

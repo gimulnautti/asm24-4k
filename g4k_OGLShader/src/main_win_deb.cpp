@@ -14,6 +14,7 @@
 #include "main.h"
 #include "glext.h"
 #include "fragmentShader.inl"
+#include "sointu1.h"
 
 //==============================================================================================
 

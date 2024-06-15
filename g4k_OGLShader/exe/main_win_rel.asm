@@ -9,7 +9,7 @@
 INCLUDELIB LIBCMT
 INCLUDELIB OLDNAMES
 
-PUBLIC	??_C@_0KDP@DGOJKCB@?$CDversion?5330?6in?5vec2?5fragCoord?$DL@ ; `string'
+PUBLIC	??_C@_0KDP@BCJAFIFF@?$CDversion?5430?6in?5vec2?5fragCoord?$DL@ ; `string'
 PUBLIC	__fltused
 _BSS	SEGMENT
 __fltused DD	01H DUP (?)
@@ -42,34 +42,34 @@ CONST	SEGMENT
 	DD	00H
 	DD	00H
 CONST	ENDS
-;	COMDAT ??_C@_0KDP@DGOJKCB@?$CDversion?5330?6in?5vec2?5fragCoord?$DL@
+;	COMDAT ??_C@_0KDP@BCJAFIFF@?$CDversion?5430?6in?5vec2?5fragCoord?$DL@
 CONST	SEGMENT
-??_C@_0KDP@DGOJKCB@?$CDversion?5330?6in?5vec2?5fragCoord?$DL@ DB '#versio'
-	DB	'n 330', 0aH, 'in vec2 fragCoord;uniform float iGlobalTime;out'
-	DB	' vec4 fragColor;mat3 rotate_x(float a){float sa=sin(a);a=cos('
-	DB	'a);return mat3(vec3(1,0,0),vec3(0,a,sa),vec3(0,-sa,a));}vec3 '
-	DB	'mandelboxPosition;float sdTorus(vec3 p){vec2 t=vec2(6,2.5);re'
-	DB	'turn length(vec2(length(p.xz)-t.x,p.y))-t.y;}vec3 repeat(vec3'
-	DB	' pos,vec3 s){return pos-s*round(pos/s);}float opSubtraction(f'
-	DB	'loat d1,float d2){return max(d1,-d2);}void sphereFold(inout v'
-	DB	'ec3 z,inout float dz){float r2=dot(z,z);if(r2<1.7){float temp'
-	DB	'=1.7/r2;z*=temp;dz*=temp;}}void boxFold(inout vec3 z,inout fl'
-	DB	'oat dz){z=clamp(z,-1.,1.)*2.-z;}', 0aH, '#define MX 13', 0aH, 'f'
-	DB	'loat mandelbox_de(vec3 z){mandelboxPosition=z;float Scale=-.8'
-	DB	'5-sin(iGlobalTime*.002)*.45;vec3 offset=z;float dr=20.;for(in'
-	DB	't n=0;n<MX;n++)boxFold(z,dr),sphereFold(z,dr),z=Scale*z+offse'
-	DB	't,dr=dr*abs(Scale)+1.;Scale=length(z);return Scale/abs(dr);}f'
-	DB	'loat sdBox(vec3 p){p=abs(p)-vec3(6,6,2);return length(max(p,0'
-	DB	'.))+min(max(p.x,max(p.y,p.z)),0.);}float scene(vec3 pos){floa'
-	DB	't d1=mandelbox_de((pos+vec3(30,cos(iGlobalTime*.0025)*30.,1))'
-	DB	'*(sin(iGlobalTime*.025)+1.5)*.025);d1=min(opSubtraction(d1,sd'
-	DB	'Torus(pos)),length(repeat(pos+vec3(sin(iGlobalTime)*1.6,1.5,c'
-	DB	'os(iGlobalTime)*1.6),vec3(6,5,6)))-.7);return opSubtraction(d'
-	DB	'1,sdBox(repeat(vec3(0,0,5.*sin(iGlobalTime*.1))+pos*rotate_x('
-	DB	'iGlobalTime*.1),vec3(10))));}vec3 calcNormal(vec3 pos){vec2 e'
-	DB	'=vec2(1,-1)*.5773;return normalize(e.xyy*scene(pos+e.xyy*5e-4'
-	DB	')+e.yyx*scene(pos+e.yyx*5e-4)+e.yxy*scene(pos+e.yxy*5e-4)+e.x'
-	DB	'xx*scene(pos+e.xxx*5e-4));}', 0aH, '#define HS .1031', 0aH, 'f'
+??_C@_0KDP@BCJAFIFF@?$CDversion?5430?6in?5vec2?5fragCoord?$DL@ DB '#versi'
+	DB	'on 430', 0aH, 'in vec2 fragCoord;uniform float iGlobalTime;ou'
+	DB	't vec4 fragColor;mat3 rotate_x(float a){float sa=sin(a);a=cos'
+	DB	'(a);return mat3(vec3(1,0,0),vec3(0,a,sa),vec3(0,-sa,a));}vec3'
+	DB	' mandelboxPosition;float sdTorus(vec3 p){vec2 t=vec2(6,2.5);r'
+	DB	'eturn length(vec2(length(p.xz)-t.x,p.y))-t.y;}vec3 repeat(vec'
+	DB	'3 pos,vec3 s){return pos-s*round(pos/s);}float opSubtraction('
+	DB	'float d1,float d2){return max(d1,-d2);}void sphereFold(inout '
+	DB	'vec3 z,inout float dz){float r2=dot(z,z);if(r2<1.7){float tem'
+	DB	'p=1.7/r2;z*=temp;dz*=temp;}}void boxFold(inout vec3 z,inout f'
+	DB	'loat dz){z=clamp(z,-1.,1.)*2.-z;}', 0aH, '#define MX 13', 0aH
+	DB	'float mandelbox_de(vec3 z){mandelboxPosition=z;float Scale=-.'
+	DB	'85-sin(iGlobalTime*.002)*.45;vec3 offset=z;float dr=20.;for(i'
+	DB	'nt n=0;n<MX;n++)boxFold(z,dr),sphereFold(z,dr),z=Scale*z+offs'
+	DB	'et,dr=dr*abs(Scale)+1.;Scale=length(z);return Scale/abs(dr);}'
+	DB	'float sdBox(vec3 p){p=abs(p)-vec3(6,6,2);return length(max(p,'
+	DB	'0.))+min(max(p.x,max(p.y,p.z)),0.);}float scene(vec3 pos){flo'
+	DB	'at d1=mandelbox_de((pos+vec3(30,cos(iGlobalTime*.0025)*30.,1)'
+	DB	')*(sin(iGlobalTime*.025)+1.5)*.025);d1=min(opSubtraction(d1,s'
+	DB	'dTorus(pos)),length(repeat(pos+vec3(sin(iGlobalTime)*1.6,1.5,'
+	DB	'cos(iGlobalTime)*1.6),vec3(6,5,6)))-.7);return opSubtraction('
+	DB	'd1,sdBox(repeat(vec3(0,0,5.*sin(iGlobalTime*.1))+pos*rotate_x'
+	DB	'(iGlobalTime*.1),vec3(10))));}vec3 calcNormal(vec3 pos){vec2 '
+	DB	'e=vec2(1,-1)*.5773;return normalize(e.xyy*scene(pos+e.xyy*5e-'
+	DB	'4)+e.yyx*scene(pos+e.yyx*5e-4)+e.yxy*scene(pos+e.yxy*5e-4)+e.'
+	DB	'xxx*scene(pos+e.xxx*5e-4));}', 0aH, '#define HS .1031', 0aH, 'f'
 	DB	'loat hash(float p){vec3 p3=fract(vec3(p)*HS);p3+=dot(p3,p3.yz'
 	DB	'x+19.19);return fract((p3.x+p3.y)*p3.z);}float ambientOcclusi'
 	DB	'on(vec3 p,vec3 n){float ao=0.;for(int i=0;i<10;i++){float l=h'
@@ -137,7 +137,7 @@ CONST	SEGMENT
 ??_C@_06GGHJAEBN@static@ DB 'static', 00H		; `string'
 CONST	ENDS
 _DATA	SEGMENT
-?fragmentShader@@3PBDB DD FLAT:??_C@_0KDP@DGOJKCB@?$CDversion?5330?6in?5vec2?5fragCoord?$DL@ ; fragmentShader
+?fragmentShader@@3PBDB DD FLAT:??_C@_0KDP@BCJAFIFF@?$CDversion?5430?6in?5vec2?5fragCoord?$DL@ ; fragmentShader
 	ORG $+4
 ?screenSettings@@3U_devicemodeA@@A	ORG $+32		; screenSettings
 	DW	00H
@@ -177,16 +177,16 @@ _hWnd$1$ = -32						; size = 4
 _msg$ = -28						; size = 28
 ?entrypoint@@YGXXZ PROC					; entrypoint, COMDAT
 
-; 55   : {
+; 56   : {
 
 	sub	esp, 36					; 00000024H
 	push	esi
 
-; 56   :     // Do NOT do this
-; 57   :     // SetProcessDpiAwarenessContext( DPI_AWARENESS_CONTEXT_SYSTEM_AWARE );
-; 58   : 
-; 59   :     // full screen
-; 60   :     if( ChangeDisplaySettings(&screenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return; ShowCursor( 0 );
+; 57   :     // Do NOT do this
+; 58   :     // SetProcessDpiAwarenessContext( DPI_AWARENESS_CONTEXT_SYSTEM_AWARE );
+; 59   : 
+; 60   :     // full screen
+; 61   :     if( ChangeDisplaySettings(&screenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return; ShowCursor( 0 );
 
 	mov	esi, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	push	4
@@ -200,8 +200,8 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__ShowCursor@4
 
-; 61   :     // create window
-; 62   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
+; 62   :     // create window
+; 63   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
 
 	push	ebx
 	push	ebx
@@ -217,15 +217,15 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__CreateWindowExA@48
 
-; 63   :     HDC hDC = GetDC(hWnd);
+; 64   :     HDC hDC = GetDC(hWnd);
 
 	push	eax
 	mov	DWORD PTR _hWnd$1$[esp+52], eax
 	call	DWORD PTR __imp__GetDC@4
 	mov	ebx, eax
 
-; 64   :     // initalize opengl
-; 65   :     SetPixelFormat(hDC,ChoosePixelFormat(hDC,&pfd),&pfd);
+; 65   :     // initalize opengl
+; 66   :     SetPixelFormat(hDC,ChoosePixelFormat(hDC,&pfd),&pfd);
 
 	mov	eax, OFFSET ?pfd@@3UtagPIXELFORMATDESCRIPTOR@@B
 	push	eax
@@ -236,7 +236,7 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__SetPixelFormat@12
 
-; 66   :     wglMakeCurrent(hDC,wglCreateContext(hDC));
+; 67   :     wglMakeCurrent(hDC,wglCreateContext(hDC));
 
 	push	ebx
 	call	DWORD PTR __imp__wglCreateContext@4
@@ -244,11 +244,11 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__wglMakeCurrent@8
 
-; 67   : 
-; 68   :     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
-; 69   : 
-; 70   :     // init intro
-; 71   :     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
+; 68   : 
+; 69   :     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
+; 70   : 
+; 71   :     // init intro
+; 72   :     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
 
 	mov	ebp, DWORD PTR __imp__wglGetProcAddress@4
 	push	OFFSET ?fragmentShader@@3PBDB
@@ -258,25 +258,25 @@ _msg$ = -28						; size = 28
 	call	ebp
 	call	eax
 
-; 72   :     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
+; 73   :     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
 	push	eax
 	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
 	call	ebp
 	call	eax
 
-; 73   : 
-; 74   :     MSG msg;
-; 75   :     float currentTime = 0.f;
+; 74   : 
+; 75   :     MSG msg;
+; 76   :     float currentTime = 0.f;
 
 	fldz
 	mov	esi, DWORD PTR _hWnd$1$[esp+48]
 	fstp	DWORD PTR _currentTime$1$[esp+48]
 $LL4@entrypoint:
 
-; 76   :     do 
-; 77   :     {
-; 78   :         PeekMessage(&msg,hWnd,0,0,true);
+; 77   :     do 
+; 78   :     {
+; 79   :         PeekMessage(&msg,hWnd,0,0,true);
 
 	push	1
 	push	0
@@ -286,12 +286,12 @@ $LL4@entrypoint:
 	push	eax
 	call	DWORD PTR __imp__PeekMessageA@20
 
-; 79   :         currentTime += 0.02f;
+; 80   :         currentTime += 0.02f;
 
 	fld	DWORD PTR _currentTime$1$[esp+48]
 	fadd	DWORD PTR __real@3ca3d70a
 
-; 80   :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
+; 81   :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
 
 	push	ecx
 	fst	DWORD PTR _currentTime$1$[esp+52]
@@ -301,7 +301,7 @@ $LL4@entrypoint:
 	call	ebp
 	call	eax
 
-; 81   :         glRects( -1, -1, 1, 1 );
+; 82   :         glRects( -1, -1, 1, 1 );
 
 	push	1
 	push	1
@@ -309,26 +309,26 @@ $LL4@entrypoint:
 	push	-1
 	call	DWORD PTR __imp__glRects@16
 
-; 82   :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
+; 83   :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
 
 	push	1
 	push	ebx
 	call	DWORD PTR __imp__wglSwapLayerBuffers@8
 
-; 83   :         Sleep(1);
+; 84   :         Sleep(1);
 
 	push	1
 	call	DWORD PTR __imp__Sleep@4
 
-; 84   :     }while( msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE );
+; 85   :     }while( msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE );
 
 	cmp	DWORD PTR _msg$[esp+52], 256		; 00000100H
 	jne	SHORT $LL4@entrypoint
 	cmp	DWORD PTR _msg$[esp+56], 27		; 0000001bH
 	jne	SHORT $LL4@entrypoint
 
-; 85   : 
-; 86   :     ChangeDisplaySettings( 0, 0 );
+; 86   : 
+; 87   :     ChangeDisplaySettings( 0, 0 );
 
 	mov	esi, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	xor	ebx, ebx
@@ -336,13 +336,13 @@ $LL4@entrypoint:
 	push	ebx
 	call	esi
 
-; 87   :     ShowCursor(1);
+; 88   :     ShowCursor(1);
 
 	push	1
 	call	DWORD PTR __imp__ShowCursor@4
 
-; 88   : 
-; 89   :     ExitProcess(0);
+; 89   : 
+; 90   :     ExitProcess(0);
 
 	push	ebx
 	call	DWORD PTR __imp__ExitProcess@4
@@ -352,7 +352,7 @@ $LN16@entrypoint:
 $LN1@entrypoint:
 	pop	esi
 
-; 90   : }
+; 91   : }
 
 	add	esp, 36					; 00000024H
 	ret	0
