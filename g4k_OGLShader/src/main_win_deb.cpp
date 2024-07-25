@@ -327,7 +327,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    su_render_song(myMuzik);
+    //su_render_song(myMuzik);
     memcpy(myMuzik, wavHeader, 44);
 
     if (!sndPlaySound((const char*)&myMuzik, SND_ASYNC | SND_MEMORY))

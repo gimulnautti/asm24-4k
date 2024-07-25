@@ -175,6 +175,7 @@ static const char* fragmentShader = \
 "col/=max(1.,ww.z*.5);"
 "}"
 "col=sqrt(col);"
+"col = col*0.5 + 0.5*col*col*(3.0-2.0*col);"
 "vec4 ribs=ribbons(uu,ro,an);"
 "gl_FragColor=vec4(col,0.)+ribs;"
 "}";
