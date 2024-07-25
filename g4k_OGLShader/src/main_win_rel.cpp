@@ -5,6 +5,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 #include <windows.h>
+#include <mmsystem.h>
 #include <GL/gl.h>
 #include <math.h>
 #include "main.h"
@@ -73,11 +74,11 @@ void entrypoint( void )
     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
     MSG msg;
-    float currentTime = 0.f;
+    long to = timeGetTime();
     do 
     {
         PeekMessage(&msg,hWnd,0,0,true);
-        currentTime += 0.02f;
+        float currentTime = (float)(timeGetTime() - to) * 0.001f;
         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
         glRects( -1, -1, 1, 1 );
         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );

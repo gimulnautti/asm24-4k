@@ -95,8 +95,8 @@ PUBLIC	??_C@_06GGHJAEBN@static@			; `string'
 PUBLIC	??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@	; `string'
 PUBLIC	??_C@_0N@ICBDHBI@glUseProgram@			; `string'
 PUBLIC	??_C@_0M@MLICAPOF@glUniform1f@			; `string'
-PUBLIC	__real@00000000
-PUBLIC	__real@3ca3d70a
+PUBLIC	__real@3a83126f
+PUBLIC	__real@4f800000
 EXTRN	__imp__Sleep@4:PROC
 EXTRN	__imp__ExitProcess@4:PROC
 EXTRN	__imp__ChoosePixelFormat@8:PROC
@@ -110,15 +110,16 @@ EXTRN	__imp__CreateWindowExA@48:PROC
 EXTRN	__imp__GetDC@4:PROC
 EXTRN	__imp__ShowCursor@4:PROC
 EXTRN	__imp__ChangeDisplaySettingsA@8:PROC
+EXTRN	__imp__timeGetTime@0:PROC
 EXTRN	__imp__glRects@16:PROC
 EXTRN	__fltused:DWORD
-;	COMDAT __real@3ca3d70a
+;	COMDAT __real@4f800000
 CONST	SEGMENT
-__real@3ca3d70a DD 03ca3d70ar			; 0.02
+__real@4f800000 DD 04f800000r			; 4.29497e+09
 CONST	ENDS
-;	COMDAT __real@00000000
+;	COMDAT __real@3a83126f
 CONST	SEGMENT
-__real@00000000 DD 000000000r			; 0
+__real@3a83126f DD 03a83126fr			; 0.001
 CONST	ENDS
 ;	COMDAT ??_C@_0M@MLICAPOF@glUniform1f@
 CONST	SEGMENT
@@ -172,21 +173,21 @@ _DATA	ENDS
 ; File C:\Users\Tonik\source\repos\asm24-4k\g4k_OGLShader\src\main_win_rel.cpp
 ;	COMDAT ?entrypoint@@YGXXZ
 _TEXT	SEGMENT
-_currentTime$1$ = -36					; size = 4
-_hWnd$1$ = -32						; size = 4
+_hWnd$1$ = -36						; size = 4
+tv168 = -32						; size = 4
 _msg$ = -28						; size = 28
 ?entrypoint@@YGXXZ PROC					; entrypoint, COMDAT
 
-; 56   : {
+; 57   : {
 
 	sub	esp, 36					; 00000024H
 	push	esi
 
-; 57   :     // Do NOT do this
-; 58   :     // SetProcessDpiAwarenessContext( DPI_AWARENESS_CONTEXT_SYSTEM_AWARE );
-; 59   : 
-; 60   :     // full screen
-; 61   :     if( ChangeDisplaySettings(&screenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return; ShowCursor( 0 );
+; 58   :     // Do NOT do this
+; 59   :     // SetProcessDpiAwarenessContext( DPI_AWARENESS_CONTEXT_SYSTEM_AWARE );
+; 60   : 
+; 61   :     // full screen
+; 62   :     if( ChangeDisplaySettings(&screenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return; ShowCursor( 0 );
 
 	mov	esi, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	push	4
@@ -196,12 +197,14 @@ _msg$ = -28						; size = 28
 	jne	$LN1@entrypoint
 	push	ebx
 	push	ebp
+	push	edi
+	mov	edi, DWORD PTR __imp__ShowCursor@4
 	xor	ebx, ebx
 	push	ebx
-	call	DWORD PTR __imp__ShowCursor@4
+	call	edi
 
-; 62   :     // create window
-; 63   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
+; 63   :     // create window
+; 64   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
 
 	push	ebx
 	push	ebx
@@ -217,15 +220,15 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__CreateWindowExA@48
 
-; 64   :     HDC hDC = GetDC(hWnd);
+; 65   :     HDC hDC = GetDC(hWnd);
 
 	push	eax
-	mov	DWORD PTR _hWnd$1$[esp+52], eax
+	mov	DWORD PTR _hWnd$1$[esp+56], eax
 	call	DWORD PTR __imp__GetDC@4
 	mov	ebx, eax
 
-; 65   :     // initalize opengl
-; 66   :     SetPixelFormat(hDC,ChoosePixelFormat(hDC,&pfd),&pfd);
+; 66   :     // initalize opengl
+; 67   :     SetPixelFormat(hDC,ChoosePixelFormat(hDC,&pfd),&pfd);
 
 	mov	eax, OFFSET ?pfd@@3UtagPIXELFORMATDESCRIPTOR@@B
 	push	eax
@@ -236,7 +239,7 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__SetPixelFormat@12
 
-; 67   :     wglMakeCurrent(hDC,wglCreateContext(hDC));
+; 68   :     wglMakeCurrent(hDC,wglCreateContext(hDC));
 
 	push	ebx
 	call	DWORD PTR __imp__wglCreateContext@4
@@ -244,11 +247,11 @@ _msg$ = -28						; size = 28
 	push	ebx
 	call	DWORD PTR __imp__wglMakeCurrent@8
 
-; 68   : 
-; 69   :     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
-; 70   : 
-; 71   :     // init intro
-; 72   :     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
+; 69   : 
+; 70   :     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
+; 71   : 
+; 72   :     // init intro
+; 73   :     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
 
 	mov	ebp, DWORD PTR __imp__wglGetProcAddress@4
 	push	OFFSET ?fragmentShader@@3PBDB
@@ -258,50 +261,55 @@ _msg$ = -28						; size = 28
 	call	ebp
 	call	eax
 
-; 73   :     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
+; 74   :     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
 	push	eax
 	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
 	call	ebp
 	call	eax
 
-; 74   : 
-; 75   :     MSG msg;
-; 76   :     float currentTime = 0.f;
+; 75   : 
+; 76   :     MSG msg;
+; 77   :     long to = timeGetTime();
 
-	fldz
-	mov	esi, DWORD PTR _hWnd$1$[esp+48]
-	fstp	DWORD PTR _currentTime$1$[esp+48]
+	call	DWORD PTR __imp__timeGetTime@0
+	mov	esi, DWORD PTR _hWnd$1$[esp+52]
+	mov	edi, eax
 $LL4@entrypoint:
 
-; 77   :     do 
-; 78   :     {
-; 79   :         PeekMessage(&msg,hWnd,0,0,true);
+; 78   :     do 
+; 79   :     {
+; 80   :         PeekMessage(&msg,hWnd,0,0,true);
 
 	push	1
 	push	0
 	push	0
 	push	esi
-	lea	eax, DWORD PTR _msg$[esp+64]
+	lea	eax, DWORD PTR _msg$[esp+68]
 	push	eax
 	call	DWORD PTR __imp__PeekMessageA@20
 
-; 80   :         currentTime += 0.02f;
+; 81   :         float currentTime = (float)(timeGetTime() - to) * 0.001f;
 
-	fld	DWORD PTR _currentTime$1$[esp+48]
-	fadd	DWORD PTR __real@3ca3d70a
+	call	DWORD PTR __imp__timeGetTime@0
+	sub	eax, edi
+	mov	DWORD PTR tv168[esp+52], eax
+	fild	DWORD PTR tv168[esp+52]
+	jns	SHORT $LN14@entrypoint
+	fadd	DWORD PTR __real@4f800000
+$LN14@entrypoint:
+	fmul	DWORD PTR __real@3a83126f
 
-; 81   :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
+; 82   :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
 
 	push	ecx
-	fst	DWORD PTR _currentTime$1$[esp+52]
 	fstp	DWORD PTR [esp]
 	push	0
 	push	OFFSET ??_C@_0M@MLICAPOF@glUniform1f@
 	call	ebp
 	call	eax
 
-; 82   :         glRects( -1, -1, 1, 1 );
+; 83   :         glRects( -1, -1, 1, 1 );
 
 	push	1
 	push	1
@@ -309,26 +317,26 @@ $LL4@entrypoint:
 	push	-1
 	call	DWORD PTR __imp__glRects@16
 
-; 83   :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
+; 84   :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
 
 	push	1
 	push	ebx
 	call	DWORD PTR __imp__wglSwapLayerBuffers@8
 
-; 84   :         Sleep(1);
+; 85   :         Sleep(1);
 
 	push	1
 	call	DWORD PTR __imp__Sleep@4
 
-; 85   :     }while( msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE );
+; 86   :     }while( msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE );
 
-	cmp	DWORD PTR _msg$[esp+52], 256		; 00000100H
+	cmp	DWORD PTR _msg$[esp+56], 256		; 00000100H
 	jne	SHORT $LL4@entrypoint
-	cmp	DWORD PTR _msg$[esp+56], 27		; 0000001bH
+	cmp	DWORD PTR _msg$[esp+60], 27		; 0000001bH
 	jne	SHORT $LL4@entrypoint
 
-; 86   : 
-; 87   :     ChangeDisplaySettings( 0, 0 );
+; 87   : 
+; 88   :     ChangeDisplaySettings( 0, 0 );
 
 	mov	esi, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	xor	ebx, ebx
@@ -336,27 +344,29 @@ $LL4@entrypoint:
 	push	ebx
 	call	esi
 
-; 88   :     ShowCursor(1);
+; 89   :     ShowCursor(1);
 
+	mov	edi, DWORD PTR __imp__ShowCursor@4
 	push	1
-	call	DWORD PTR __imp__ShowCursor@4
+	call	edi
 
-; 89   : 
-; 90   :     ExitProcess(0);
+; 90   : 
+; 91   :     ExitProcess(0);
 
 	push	ebx
 	call	DWORD PTR __imp__ExitProcess@4
+	pop	edi
 	pop	ebp
 	pop	ebx
-$LN16@entrypoint:
+$LN17@entrypoint:
 $LN1@entrypoint:
 	pop	esi
 
-; 91   : }
+; 92   : }
 
 	add	esp, 36					; 00000024H
 	ret	0
-$LN14@entrypoint:
+$LN15@entrypoint:
 ?entrypoint@@YGXXZ ENDP					; entrypoint
 _TEXT	ENDS
 END

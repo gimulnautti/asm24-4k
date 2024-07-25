@@ -214,6 +214,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SetProcessDpiAwarenessContext( DPI_AWARENESS_CONTEXT_SYSTEM_AWARE );
 
     info->hInstance = GetModuleHandle( 0 );
+    //info->full++;
 
     //if( MessageBox( 0, "fullscreen?", info->wndclass, MB_YESNO|MB_ICONQUESTION)==IDYES ) info->full++;
 
@@ -245,7 +246,8 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     oglUseProgram( fsId );
 
-    float currentTime = 0.f;
+    long to = timeGetTime();
+
     while( !done )
     {
         while( PeekMessage(&msg,0,0,0,PM_REMOVE) )
@@ -255,7 +257,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
             DispatchMessage( &msg );
         }
-        currentTime += 0.02f;
+        float currentTime = (float)(timeGetTime() - to) * 0.001f;
 
         oglUniform1f(0, currentTime);
 
