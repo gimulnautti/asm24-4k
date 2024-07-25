@@ -131,6 +131,7 @@
     <ClInclude Include="src\basssong.h" />
     <ClInclude Include="src\fp.h" />
     <ClInclude Include="src\glext.h" />
+    <ClInclude Include="src\imageShader.h" />
     <ClInclude Include="src\khrplatform.h" />
     <ClInclude Include="src\main.h" />
   </ItemGroup>

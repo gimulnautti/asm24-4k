@@ -14,6 +14,7 @@
 #include "main.h"
 #include "glext.h"
 #include "fragmentShader.inl"
+#include "imageShader.h"
 #include "basssong.h"
 
 //==============================================================================================
@@ -233,9 +234,6 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     //if( MessageBox( 0, "fullscreen?", info->wndclass, MB_YESNO|MB_ICONQUESTION)==IDYES ) info->full++;
 
-    su_render_song(myMuzik);
-    memcpy(myMuzik, wavHeader, 44);
-
     if( !window_init(info) )
     {
         window_end( info );
@@ -250,6 +248,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
 
     int fsId = oglCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentShader);                           
+    int imgFsId = oglCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &imageShader);
 
     int     result;
     char    error[1024];
@@ -257,9 +256,20 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     if( result==0 )
     {
         oglGetProgramInfoLog( fsId, 1024, NULL, (char *)error );
-        MessageBox(info->hWnd,error,"Error",MB_OK);
+        MessageBox(info->hWnd,error,"Error FS",MB_OK);
         return 0;
     }
+
+    oglGetProgramiv(imgFsId, GL_LINK_STATUS, &result);
+    if (result == 0)
+    {
+        oglGetProgramInfoLog(imgFsId, 1024, NULL, (char*)error);
+        MessageBox(info->hWnd, error, "Error IMGFS", MB_OK);
+        return 0;
+    }
+
+    //su_render_song(myMuzik);
+    memcpy(myMuzik, wavHeader, 44);
 
     if (!sndPlaySound((const char*)&myMuzik, SND_ASYNC | SND_MEMORY))
     {
