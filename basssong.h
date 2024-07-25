@@ -24,10 +24,10 @@
 #else
 	#define SU_CALLCONV
 #endif
-typedef float SUsample;
-#define SU_SAMPLE_RANGE 1.0
-#define SU_SAMPLE_FLOAT
-#define SU_SAMPLE_SIZE 4
+typedef short SUsample;
+#define SU_SAMPLE_RANGE 32767.0
+#define SU_SAMPLE_PCM16
+#define SU_SAMPLE_SIZE 2
 
 
 #ifdef __cplusplus

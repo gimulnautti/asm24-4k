@@ -3,14 +3,14 @@
 #define SU_RENDER_H
 
 #define SU_CHANNEL_COUNT        2
-#define SU_LENGTH_IN_SAMPLES    7785472
+#define SU_LENGTH_IN_SAMPLES    8714944
 #define SU_BUFFER_LENGTH        (SU_LENGTH_IN_SAMPLES*SU_CHANNEL_COUNT)
 
 #define SU_SAMPLE_RATE          44100
-#define SU_BPM                  87
-#define SU_ROWS_PER_BEAT        4
+#define SU_BPM                  119
+#define SU_ROWS_PER_BEAT        8
 #define SU_ROWS_PER_PATTERN     32
-#define SU_LENGTH_IN_PATTERNS   32
+#define SU_LENGTH_IN_PATTERNS   98
 #define SU_LENGTH_IN_ROWS       (SU_LENGTH_IN_PATTERNS*SU_PATTERN_SIZE)
 #define SU_SAMPLES_PER_ROW      (SU_SAMPLE_RATE*60/(SU_BPM*SU_ROWS_PER_BEAT))
 
@@ -24,10 +24,10 @@
 #else
 	#define SU_CALLCONV
 #endif
-typedef float SUsample;
-#define SU_SAMPLE_RANGE 1.0
-#define SU_SAMPLE_FLOAT
-#define SU_SAMPLE_SIZE 4
+typedef short SUsample;
+#define SU_SAMPLE_RANGE 32767.0
+#define SU_SAMPLE_PCM16
+#define SU_SAMPLE_SIZE 2
 
 
 #ifdef __cplusplus

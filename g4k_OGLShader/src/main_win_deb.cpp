@@ -14,7 +14,7 @@
 #include "main.h"
 #include "glext.h"
 #include "fragmentShader.inl"
-#include "sointu1.h"
+#include "basssong.h"
 
 //==============================================================================================
 
@@ -53,6 +53,20 @@ static PIXELFORMATDESCRIPTOR pfd =
 static WININFO wininfo = {  0,0,0,0,0,
                             {'g','m','l',0}
                             };
+
+
+static const int wavHeader[11] = {
+    0x46464952,
+    SU_BUFFER_LENGTH + 36,
+    0x45564157,
+    0x20746D66,
+    16,
+    WAVE_FORMAT_PCM | (SU_CHANNEL_COUNT << 16),
+    SU_SAMPLE_RATE,
+    SU_SAMPLE_RATE* SU_CHANNEL_COUNT * sizeof(short),
+    (SU_CHANNEL_COUNT * sizeof(short)) | ((8 * sizeof(short)) << 16),
+    0x61746164,
+    SU_BUFFER_LENGTH * sizeof(short) };
 
 #define NUMFUNCIONES 5
 
@@ -201,6 +215,7 @@ static int window_init( WININFO *info )
     return( 1 );
 }
 
+static short myMuzik[SU_BUFFER_LENGTH + 22];
 
 //==============================================================================================
 
@@ -217,6 +232,9 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //info->full++;
 
     //if( MessageBox( 0, "fullscreen?", info->wndclass, MB_YESNO|MB_ICONQUESTION)==IDYES ) info->full++;
+
+    su_render_song(myMuzik);
+    memcpy(myMuzik, wavHeader, 44);
 
     if( !window_init(info) )
     {
@@ -243,6 +261,12 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
+    if (!sndPlaySound((const char*)&myMuzik, SND_ASYNC | SND_MEMORY))
+    {
+        window_end(info);
+        MessageBox(0, "mzk???", "error", MB_OK | MB_ICONEXCLAMATION);
+        return 0;
+    }
 
     oglUseProgram( fsId );
 

@@ -128,11 +128,11 @@
     <Bscmake />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\basssong.h" />
     <ClInclude Include="src\fp.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\khrplatform.h" />
     <ClInclude Include="src\main.h" />
-    <ClInclude Include="src\sointu1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main_win_deb.cpp">
@@ -144,10 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\fragmentShader.inl" />
-    <None Include="src\sointu1.inc" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="src\sointu1.obj" />
+    <Object Include="src\basssong.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,6 +11,7 @@
 #include "main.h"
 #include "glext.h"
 #include "fragmentShader.inl"
+#include "basssong.h"
 
 
 //----------------------------------------------------------------------------
@@ -36,6 +37,21 @@ static const PIXELFORMATDESCRIPTOR pfd = {
     0,
     PFD_MAIN_PLANE,
     0, 0, 0, 0 };
+
+static const int wavHeader[11] = {
+    0x46464952,
+    SU_BUFFER_LENGTH + 36,
+    0x45564157,
+    0x20746D66,
+    16,
+    WAVE_FORMAT_PCM | (SU_CHANNEL_COUNT << 16),
+    SU_SAMPLE_RATE,
+    SU_SAMPLE_RATE * SU_CHANNEL_COUNT * sizeof(short),
+    (SU_CHANNEL_COUNT * sizeof(short)) | ((8 * sizeof(short)) << 16),
+    0x61746164,
+    SU_BUFFER_LENGTH * sizeof(short) };
+
+static short music[SU_BUFFER_LENGTH + 22];
 
 static DEVMODE screenSettings = { {0},
     #if _MSC_VER < 1400
@@ -72,6 +88,11 @@ void entrypoint( void )
     // init intro
     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
+
+    su_render_song(music + 22);
+    memcpy(music, wavHeader, 44);
+    // play mzk
+    sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY);
 
     MSG msg;
     long to = timeGetTime();
