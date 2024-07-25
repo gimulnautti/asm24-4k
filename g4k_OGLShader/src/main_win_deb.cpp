@@ -69,7 +69,7 @@ static const int wavHeader[11] = {
     0x61746164,
     SU_BUFFER_LENGTH * sizeof(short) };
 
-#define NUMFUNCIONES 5
+#define NUMFUNCIONES 15
 
 static void *myglfunc[NUMFUNCIONES];
 
@@ -78,13 +78,33 @@ static const char *strs[] = {
     "glUseProgram",
     "glGetProgramiv",
     "glGetProgramInfoLog",
-    "glUniform1f", };
+    "glUniform1f",
+    "glGenFramebuffers",
+    "glBindFramebuffer",
+    "glFramebufferTexture",
+    "glDrawBuffers",
+    "glCheckFramebufferStatus",
+    "glUniform1i",
+    "glGenRenderbuffers",
+    "glBindRenderbuffer",
+    "glRenderbufferStorage",
+    "glFramebufferRenderbuffer"};
 
 #define oglCreateShaderProgramv         ((PFNGLCREATESHADERPROGRAMVPROC)myglfunc[0])
 #define oglUseProgram                   ((PFNGLUSEPROGRAMPROC)myglfunc[1])
 #define oglGetProgramiv                 ((PFNGLGETPROGRAMIVPROC)myglfunc[2])
 #define oglGetProgramInfoLog            ((PFNGLGETPROGRAMINFOLOGPROC)myglfunc[3])
 #define oglUniform1f                    ((PFNGLUNIFORM1FPROC)myglfunc[4])
+#define oglGenFramebuffers              ((PFNGLGENFRAMEBUFFERSPROC)myglfunc[5])
+#define oglBindFramebuffer              ((PFNGLBINDFRAMEBUFFERPROC)myglfunc[6])
+#define oglFramebufferTexture           ((PFNGLFRAMEBUFFERTEXTUREPROC)myglfunc[7])
+#define oglDrawBuffers                  ((PFNGLDRAWBUFFERSPROC)myglfunc[8])
+#define oglCheckFramebufferStatus       ((PFNGLCHECKFRAMEBUFFERSTATUSPROC)myglfunc[9])
+#define oglUniform1i                    ((PFNGLUNIFORM1IPROC)myglfunc[10])
+#define oglGenRenderbuffers             ((PFNGLGENRENDERBUFFERSPROC)myglfunc[11])
+#define oglBindRenderbuffer             ((PFNGLBINDRENDERBUFFERPROC)myglfunc[12])
+#define oglRenderbufferStorage          ((PFNGLRENDERBUFFERSTORAGEPROC)myglfunc[13])
+#define oglFramebufferRenderbuffer      ((PFNGLFRAMEBUFFERRENDERBUFFERPROC)myglfunc[14])
 
 //==============================================================================================
 
@@ -241,17 +261,22 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return( 0 );
     }
 
+    char    error[1024];
     for( int i=0; i<NUMFUNCIONES; i++ )
     {
         myglfunc[i] = wglGetProcAddress( strs[i] );
-        if( !myglfunc[i] ) return( 0 );
+        if( !myglfunc[i] ) 
+        {
+            memcpy(error, strs[i], strlen(strs[i]) + 1);
+            MessageBox(info->hWnd, error, "Error GLProc", MB_OK);
+            return( 0 );
+        }
     }
 
     int fsId = oglCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentShader);                           
     int imgFsId = oglCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &imageShader);
 
     int     result;
-    char    error[1024];
     oglGetProgramiv( fsId, GL_LINK_STATUS, &result ); 
     if( result==0 )
     {
@@ -268,21 +293,54 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    //su_render_song(myMuzik);
+    // generate render target
+    GLuint frameBufferId = 0;
+    oglGenFramebuffers(1, &frameBufferId);
+    oglBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+
+    // create texture with rgb output
+    GLuint renderTexture;
+    glGenTextures(1, &renderTexture);
+    glBindTexture(GL_TEXTURE_2D, renderTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, XRES, YRES, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+    // add depth buffer
+    GLuint depthbuffer;
+    oglGenRenderbuffers(1, &depthbuffer);
+    oglBindRenderbuffer(GL_RENDERBUFFER, depthbuffer);
+    oglRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, XRES, YRES);
+    oglFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthbuffer);
+
+    // configure framebuffer
+    oglFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderTexture, 0);
+    GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    oglDrawBuffers(1, drawBuffers);
+
+    if (oglCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        window_end(info);
+        MessageBox(0, "GL Framebuffer", "error", MB_OK | MB_ICONEXCLAMATION);
+        return 0;
+    }
+
+    su_render_song(myMuzik);
     memcpy(myMuzik, wavHeader, 44);
 
     if (!sndPlaySound((const char*)&myMuzik, SND_ASYNC | SND_MEMORY))
     {
         window_end(info);
-        MessageBox(0, "mzk???", "error", MB_OK | MB_ICONEXCLAMATION);
+        MessageBox(0, "sndPlaySound", "error", MB_OK | MB_ICONEXCLAMATION);
         return 0;
     }
 
-    oglUseProgram( fsId );
-
     long to = timeGetTime();
+    float currentTime = 0.f;
 
-    while( !done )
+    while (!done && currentTime < SU_LENGTH_IN_SAMPLES / SU_SAMPLE_RATE)
     {
         while( PeekMessage(&msg,0,0,0,PM_REMOVE) )
         {
@@ -291,11 +349,24 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
             DispatchMessage( &msg );
         }
-        float currentTime = (float)(timeGetTime() - to) * 0.001f;
+        currentTime = (float)(timeGetTime() - to) * 0.001f;
 
+        // draw effect
+
+        oglBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+        oglUseProgram(fsId);
         oglUniform1f(0, currentTime);
-
         glRects( -1, -1, 1, 1 );
+
+        // draw post processing
+
+        oglBindFramebuffer(GL_FRAMEBUFFER, 0);
+        oglUseProgram(imgFsId);
+        glBindTexture(GL_TEXTURE_2D, renderTexture);
+        glRects(-1, -1, 1, 1);
+
+        // flip buffer
+
         SwapBuffers( info->hDC );
         Sleep( 1 ); // give other processes some chance to do something
     }

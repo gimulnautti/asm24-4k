@@ -25,8 +25,8 @@ static const char* imageShader = \
 "}"
 "void main()"
 "{"
-"vec2 iResolution = vec2(1280.,720.);"
-"vec2 uv=fragCoord.xy/iResolution.xy;"
+"vec2 iResolution = vec2(2.,2.);"
+"vec2 uv=fragCoord.xy/iResolution.xy + vec2(.5,.5);"
 "vec4 box=texture2D(gm_BaseTexture,uv);"
 "gl_FragColor=box+.05*GetBloom(uv);"
 "}";

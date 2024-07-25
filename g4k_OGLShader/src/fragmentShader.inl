@@ -3,26 +3,6 @@
 //--------------------------------------------------------------------------//
 
 static const char* fragmentShader = \
-/*"void main(void)"
-"{"
-"float aa = gl_TexCoord[0].x;"
-
-"vec2 c=vec2(-0.75,0)+(2.0*gl_FragCoord.xy-vec2(1920,1080))/1080.0;"
-"c += 0.04*sin(aa+vec2(0,1.57))*sqrt(aa/32.0);"
-
-"vec2 z=vec2(0.0);"
-"float h=0.0;"
-"float m;"
-"for(int i=0;i<100;i++)"
-"{"
-"z=vec2(z.x*z.x-z.y*z.y,2.0*z.x*z.y)+c;"
-"m=dot(z,z);"
-"if(m>100000.0) break;"
-"h+=1.0;"
-"}"
-"h=h+1.0-log2(.5*log(m));"
-"gl_FragColor=vec4(h/100.0);"
-"}";*/
 "#version 430\n"
 "uniform float iGlobalTime;"
 "varying vec2 fragCoord;"
@@ -35,7 +15,7 @@ static const char* fragmentShader = \
 "vec3 mandelboxPosition;\n"
 "#define BPM 119.\n"
 "#define BPS (60./BPM)\n"
-"#define DEL -0.05\n"
+"#define DEL -0.00\n"
 "float revsaw(float beats)"
 "{"
 "beats*=BPS;"
@@ -196,5 +176,5 @@ static const char* fragmentShader = \
 "}"
 "col=sqrt(col);"
 "vec4 ribs=ribbons(uu,ro,an);"
-"gl_FragColor=vec4(col,an)+ribs;"
+"gl_FragColor=vec4(col,0.)+ribs;"
 "}";

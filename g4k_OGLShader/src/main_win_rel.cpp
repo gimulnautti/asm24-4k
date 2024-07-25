@@ -97,15 +97,16 @@ void entrypoint( void )
 
     MSG msg;
     long to = timeGetTime();
+    float currentTime = 0.f;
     do 
     {
         PeekMessage(&msg,hWnd,0,0,true);
-        float currentTime = (float)(timeGetTime() - to) * 0.001f;
+        currentTime = (float)(timeGetTime() - to) * 0.001f;
         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
         glRects( -1, -1, 1, 1 );
         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
         Sleep(1);
-    }while( msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE );
+    }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < SU_LENGTH_IN_SAMPLES / SU_SAMPLE_RATE);
 
     ChangeDisplaySettings( 0, 0 );
     ShowCursor(1);
