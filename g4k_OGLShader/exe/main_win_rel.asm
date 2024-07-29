@@ -9,7 +9,7 @@
 INCLUDELIB LIBCMT
 INCLUDELIB OLDNAMES
 
-PUBLIC	??_C@_0BAPH@FAKFCMPA@?$CDversion?5430?6uniform?5float?5iGlo@ ; `string'
+PUBLIC	??_C@_0BAPG@FKGOJCAO@?$CDversion?5430?6uniform?5float?5iGlo@ ; `string'
 PUBLIC	??_C@_0CLN@CHDMPCJO@?$CDversion?5430?6varying?5vec2?5fragC@ ; `string'
 PUBLIC	__fltused
 _BSS	SEGMENT
@@ -70,81 +70,81 @@ CONST	SEGMENT
 	DB	'agCoord.xy/iResolution.xy + vec2(.5,.5);vec4 box=texture2D(gm'
 	DB	'_BaseTexture,uv);gl_FragColor=box+.05*GetBloom(uv);}', 00H ; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0BAPH@FAKFCMPA@?$CDversion?5430?6uniform?5float?5iGlo@
+;	COMDAT ??_C@_0BAPG@FKGOJCAO@?$CDversion?5430?6uniform?5float?5iGlo@
 CONST	SEGMENT
-??_C@_0BAPH@FAKFCMPA@?$CDversion?5430?6uniform?5float?5iGlo@ DB '#version'
+??_C@_0BAPG@FKGOJCAO@?$CDversion?5430?6uniform?5float?5iGlo@ DB '#version'
 	DB	' 430', 0aH, 'uniform float iGlobalTime;mat3 rotate_x(float a)'
 	DB	'{float sa=sin(a);a=cos(a);return mat3(vec3(1,0,0),vec3(0,a,sa'
 	DB	'),vec3(0,-sa,a));}vec3 mandelboxPosition;', 0aH, '#define BPM'
-	DB	' 119.', 0aH, '#define BPS (60./BPM)', 0aH, '#define DEL -0.05'
-	DB	0aH, '#define TT iGlobalTime-DEL', 0aH, 'float revsaw(float be'
-	DB	'ats){beats*=BPS;return smoothstep(0.,1.,1.-mod(TT,beats)/beat'
-	DB	's);}float square(){float beats=32.*BPS;return mod(TT,beats)/b'
-	DB	'eats<.5?0.:1.;}float beatstep(float beats){beats*=BPS;return '
-	DB	'TT<beats?0.:1.;}float sdTorus(vec3 p,vec2 t){return length(ve'
-	DB	'c2(length(p.xz)-t.x,p.y))-t.y;}float sdBox(vec3 p,vec3 b){p=a'
-	DB	'bs(p)-b;return length(max(p,0.))+min(max(p.x,max(p.y,p.z)),0.'
-	DB	');}vec3 repeat(vec3 pos,vec3 s){return pos-s*round(pos/s);}fl'
-	DB	'oat opSubtraction(float d1,float d2){return max(d1,-d2);}void'
-	DB	' sphereFold(inout vec3 z,inout float dz){float r2=dot(z,z);if'
-	DB	'(r2<1.7){float temp=1.7/r2;z*=temp;dz*=temp;}}void boxFold(in'
-	DB	'out vec3 z,inout float dz){z=clamp(z,-1.,1.)*2.-z;}float mand'
-	DB	'elbox_de(vec3 z){mandelboxPosition=z;float Scale=-.85-sin(iGl'
-	DB	'obalTime*.002)*.45;vec3 offset=z;float dr=20.;for(int n=0;n<1'
-	DB	'3;n++)boxFold(z,dr),sphereFold(z,dr),z=Scale*z+offset,dr=dr*a'
-	DB	'bs(Scale)+1.;Scale=length(z);return Scale/abs(dr);}float scen'
-	DB	'e(vec3 pos){float d1=mandelbox_de((pos+vec3(30,cos(iGlobalTim'
-	DB	'e*.0025)*30.,1))*(sin(iGlobalTime*.025)+1.5)*.025),size1=6.+b'
-	DB	'eatstep(140.)*2.,size2=2.5+beatstep(128.)*3.-beatstep(140.)*2'
-	DB	'.;d1=min(opSubtraction(d1,sdTorus(pos,vec2(size1,size2))),len'
-	DB	'gth(repeat(pos+vec3(sin(iGlobalTime)*1.6,1.5,cos(iGlobalTime)'
-	DB	'*1.6),vec3(6,5,6)))-.7);vec3 bsize=vec3(6,6,2)*(1.5-square()*'
-	DB	'.5);return opSubtraction(d1,sdBox(repeat(vec3(0,0,5.*sin(iGlo'
-	DB	'balTime*.1))+pos*rotate_x(iGlobalTime*.1),vec3(10)),bsize));}'
-	DB	'vec3 calcNormal(vec3 pos){vec2 e=vec2(1,-1)*.5773;return norm'
-	DB	'alize(e.xyy*scene(pos+e.xyy*5e-4)+e.yyx*scene(pos+e.yyx*5e-4)'
-	DB	'+e.yxy*scene(pos+e.yxy*5e-4)+e.xxx*scene(pos+e.xxx*5e-4));}fl'
-	DB	'oat hash(float p){vec3 p3=fract(vec3(p)*.1031);p3+=dot(p3,p3.'
-	DB	'yzx+19.19);return fract((p3.x+p3.y)*p3.z);}float ambientOcclu'
-	DB	'sion(vec3 p,vec3 n){float ao=0.;for(int i=0;i<9;i++){float l='
-	DB	'hash(float(i))*2.5;ao+=(l-max(scene(p+n*l),0.))/2.5*2.5;}retu'
-	DB	'rn clamp(1.-ao/9.,.05,1.);}vec3 stripes(vec3 pos){float strip'
-	DB	'e=sin(pos.x*7.)*.4+.6;return vec3(1,stripe,stripe*.75);}int n'
-	DB	'umRibbons(){return 4+int(beatstep(128.))*3;}int numRibbonStac'
-	DB	'ks(){return 1+int(beatstep(124.))*4-int(beatstep(160.))*3;}fl'
-	DB	'oat ribbonSpacing(){return 6.-beatstep(124.)*2.5;}vec3 ribbon'
-	DB	'Color(float n){return vec3(mod(n,7.)/14.,mod(n,5.)/5.,.5+mod('
-	DB	'n,3.)/6.);}vec2 ribbonscene(vec3 p){float size=revsaw(1.)*.05'
-	DB	'+.05+beatstep(120.)*.05,d=1e4,ld=d,ribbonStart=float(-numRibb'
-	DB	'ons())*ribbonSpacing()/2.+6.,n=0.;for(int i=0;i<numRibbons();'
-	DB	'++i){float fi=float(i);for(int j=0;j<numRibbonStacks();++j){f'
-	DB	'loat fj=float(j+1);d=min(d,sdBox(p+vec3(fj*ribbonSpacing()+3.'
-	DB	'*sin(iGlobalTime*.2*fj)+cos(p.z*.5),ribbonStart+ribbonSpacing'
-	DB	'()*fi+sin(p.z*.5),ribbonStart+fi*ribbonSpacing()*2.*sin(iGlob'
-	DB	'alTime*.25*fj)),vec3(size,size,4.+beatstep(120.)*6.)));if(d<l'
-	DB	'd)n=float(numRibbonStacks())*fj+fi,ld=d;}}return vec2(d,n);}v'
-	DB	'ec3 ribbons(vec3 rd,vec3 ro,float boxDepth){float t=0.;vec3 p'
-	DB	'os;float n=0.;for(int i=0;i<64;i++){pos=ro+t*rd;vec2 ribbonRe'
-	DB	'sult=ribbonscene(pos);float h=ribbonResult.x;if(h<1e-4){n=rib'
-	DB	'bonResult.y;break;}else if(t>15.)break;t+=h;}return t<15.&&t<'
-	DB	'boxDepth?ribbonColor(n):vec3(0);}void main(){vec2 ir=vec2(128'
-	DB	'0,720);ir=(-ir.xy+2.*gl_FragCoord.xy)/ir.y;float an=.05*iGlob'
-	DB	'alTime+sin(iGlobalTime*.1)*ir.y*sin(iGlobalTime*.05)*2.;an*=s'
-	DB	'quare()*2.-1.;vec3 ro=vec3(8.*cos(an),.6,8.*sin(an)),ww=norma'
-	DB	'lize(vec3(0,sin(iGlobalTime*.5),0)-ro),uu=normalize(cross(ww,'
-	DB	'vec3(0,.6,.5)));ww=normalize(ir.x*uu+ir.y*normalize(cross(uu,'
-	DB	'ww))+1.5*ww);an=0.;float ribsDist=1e5,n=0.;for(int i=0;i<128;'
-	DB	'i++){uu=ro+an*ww;float h=scene(uu);if(h<.00015){vec2 ribResul'
-	DB	't=ribbonscene(uu);ribsDist=ribResult.x;n=ribResult.y;break;}e'
-	DB	'lse if(an>35.)break;an+=h;}vec3 col=vec3(0);if(an<35.){vec3 n'
-	DB	'or=calcNormal(uu);float dif=clamp(dot(nor,vec3(.7,1.2,.4)),0.'
-	DB	',1.2);dif*=dif;dif*=dif;dif*=revsaw(16.);float amb=.5+.5*dot('
-	DB	'nor,vec3(0,.8,-.6));amb*=revsaw(16.);col=vec3(.2,.3,.5)*amb+s'
-	DB	'tripes(mandelboxPosition)*vec3(.9,.8,.6)*dif;col*=ambientOccl'
-	DB	'usion(uu,nor);if(ribsDist<2.){float f=(2.-ribsDist)/2.;col+=f'
-	DB	'*f*f*ribbonColor(n)*(revsaw(1.)*.5+.5);}col/=max(1.,uu.z*.5);'
-	DB	'}col=sqrt(col);col=col*.5+.5*col*col*(3.-2.*col);ro=ribbons(w'
-	DB	'w,ro,an);gl_FragColor=vec4(col,an)+vec4(ro,0);}', 00H ; `string'
+	DB	' 119.', 0aH, '#define BPS (60./BPM)', 0aH, '#define DEL 0.05', 0aH
+	DB	'#define TT iGlobalTime-DEL', 0aH, 'float revsaw(float beats){'
+	DB	'beats*=BPS;return smoothstep(0.,1.,1.-mod(TT,beats)/beats);}f'
+	DB	'loat square(){float beats=32.*BPS;return mod(TT,beats)/beats<'
+	DB	'.5?0.:1.;}float beatstep(float beats){beats*=BPS;return TT<be'
+	DB	'ats?0.:1.;}float sdTorus(vec3 p,vec2 t){return length(vec2(le'
+	DB	'ngth(p.xz)-t.x,p.y))-t.y;}float sdBox(vec3 p,vec3 b){p=abs(p)'
+	DB	'-b;return length(max(p,0.))+min(max(p.x,max(p.y,p.z)),0.);}ve'
+	DB	'c3 repeat(vec3 pos,vec3 s){return pos-s*round(pos/s);}float o'
+	DB	'pSubtraction(float d1,float d2){return max(d1,-d2);}void sphe'
+	DB	'reFold(inout vec3 z,inout float dz){float r2=dot(z,z);if(r2<1'
+	DB	'.7){float temp=1.7/r2;z*=temp;dz*=temp;}}void boxFold(inout v'
+	DB	'ec3 z,inout float dz){z=clamp(z,-1.,1.)*2.-z;}float mandelbox'
+	DB	'_de(vec3 z){mandelboxPosition=z;float Scale=-.85-sin(iGlobalT'
+	DB	'ime*.002)*.45;vec3 offset=z;float dr=20.;for(int n=0;n<13;n++'
+	DB	')boxFold(z,dr),sphereFold(z,dr),z=Scale*z+offset,dr=dr*abs(Sc'
+	DB	'ale)+1.;Scale=length(z);return Scale/abs(dr);}float scene(vec'
+	DB	'3 pos){float d1=mandelbox_de((pos+vec3(30,cos(iGlobalTime*.00'
+	DB	'25)*30.,1))*(sin(iGlobalTime*.025)+1.5)*.025),size1=6.+beatst'
+	DB	'ep(140.)*2.,size2=2.5+beatstep(128.)*3.-beatstep(140.)*2.;d1='
+	DB	'min(opSubtraction(d1,sdTorus(pos,vec2(size1,size2))),length(r'
+	DB	'epeat(pos+vec3(sin(iGlobalTime)*1.6,1.5,cos(iGlobalTime)*1.6)'
+	DB	',vec3(6,5,6)))-.7);vec3 bsize=vec3(6,6,2)*(1.5-square()*.5);r'
+	DB	'eturn opSubtraction(d1,sdBox(repeat(vec3(0,0,5.*sin(iGlobalTi'
+	DB	'me*.1))+pos*rotate_x(iGlobalTime*.1),vec3(10)),bsize));}vec3 '
+	DB	'calcNormal(vec3 pos){vec2 e=vec2(1,-1)*.5773;return normalize'
+	DB	'(e.xyy*scene(pos+e.xyy*5e-4)+e.yyx*scene(pos+e.yyx*5e-4)+e.yx'
+	DB	'y*scene(pos+e.yxy*5e-4)+e.xxx*scene(pos+e.xxx*5e-4));}float h'
+	DB	'ash(float p){vec3 p3=fract(vec3(p)*.1031);p3+=dot(p3,p3.yzx+1'
+	DB	'9.19);return fract((p3.x+p3.y)*p3.z);}float ambientOcclusion('
+	DB	'vec3 p,vec3 n){float ao=0.;for(int i=0;i<9;i++){float l=hash('
+	DB	'float(i))*2.5;ao+=(l-max(scene(p+n*l),0.))/2.5*2.5;}return cl'
+	DB	'amp(1.-ao/9.,.05,1.);}vec3 stripes(vec3 pos){float stripe=sin'
+	DB	'(pos.x*7.)*.4+.6;return vec3(1,stripe,stripe*.75);}int numRib'
+	DB	'bons(){return 4+int(beatstep(128.))*3;}int numRibbonStacks(){'
+	DB	'return 1+int(beatstep(124.))*4-int(beatstep(160.))*3;}float r'
+	DB	'ibbonSpacing(){return 6.-beatstep(124.)*2.5;}vec3 ribbonColor'
+	DB	'(float n){return vec3(mod(n,7.)/14.,mod(n,5.)/5.,.5+mod(n,3.)'
+	DB	'/6.);}vec2 ribbonscene(vec3 p){float size=revsaw(1.)*.05+.05+'
+	DB	'beatstep(120.)*.05,d=1e4,ld=d,ribbonStart=float(-numRibbons()'
+	DB	')*ribbonSpacing()/2.+6.,n=0.;for(int i=0;i<numRibbons();++i){'
+	DB	'float fi=float(i);for(int j=0;j<numRibbonStacks();++j){float '
+	DB	'fj=float(j+1);d=min(d,sdBox(p+vec3(fj*ribbonSpacing()+3.*sin('
+	DB	'iGlobalTime*.2*fj)+cos(p.z*.5),ribbonStart+ribbonSpacing()*fi'
+	DB	'+sin(p.z*.5),ribbonStart+fi*ribbonSpacing()*2.*sin(iGlobalTim'
+	DB	'e*.25*fj)),vec3(size,size,4.+beatstep(120.)*6.)));if(d<ld)n=f'
+	DB	'loat(numRibbonStacks())*fj+fi,ld=d;}}return vec2(d,n);}vec3 r'
+	DB	'ibbons(vec3 rd,vec3 ro,float boxDepth){float t=0.;vec3 pos;fl'
+	DB	'oat n=0.;for(int i=0;i<64;i++){pos=ro+t*rd;vec2 ribbonResult='
+	DB	'ribbonscene(pos);float h=ribbonResult.x;if(h<1e-4){n=ribbonRe'
+	DB	'sult.y;break;}else if(t>15.)break;t+=h;}return t<15.&&t<boxDe'
+	DB	'pth?ribbonColor(n):vec3(0);}void main(){vec2 ir=vec2(1280,720'
+	DB	');ir=(-ir.xy+2.*gl_FragCoord.xy)/ir.y;float an=.05*iGlobalTim'
+	DB	'e+sin(iGlobalTime*.1)*ir.y*sin(iGlobalTime*.05)*2.;an*=square'
+	DB	'()*2.-1.;vec3 ro=vec3(8.*cos(an),.6,8.*sin(an)),ww=normalize('
+	DB	'vec3(0,sin(iGlobalTime*.5),0)-ro),uu=normalize(cross(ww,vec3('
+	DB	'0,.6,.5)));ww=normalize(ir.x*uu+ir.y*normalize(cross(uu,ww))+'
+	DB	'1.5*ww);an=0.;float ribsDist=1e5,n=0.;for(int i=0;i<128;i++){'
+	DB	'uu=ro+an*ww;float h=scene(uu);if(h<.00015){vec2 ribResult=rib'
+	DB	'bonscene(uu);ribsDist=ribResult.x;n=ribResult.y;break;}else i'
+	DB	'f(an>35.)break;an+=h;}vec3 col=vec3(0);if(an<35.){vec3 nor=ca'
+	DB	'lcNormal(uu);float dif=clamp(dot(nor,vec3(.7,1.2,.4)),0.,1.2)'
+	DB	';dif*=dif;dif*=dif;dif*=revsaw(16.);float amb=.5+.5*dot(nor,v'
+	DB	'ec3(0,.8,-.6));amb*=revsaw(16.);col=vec3(.2,.3,.5)*amb+stripe'
+	DB	's(mandelboxPosition)*vec3(.9,.8,.6)*dif;col*=ambientOcclusion'
+	DB	'(uu,nor);if(ribsDist<2.){float f=(2.-ribsDist)/2.;col+=f*f*f*'
+	DB	'ribbonColor(n)*(revsaw(1.)*.5+.5);}col/=max(1.,uu.z*.5);}col='
+	DB	'sqrt(col);col=col*.5+.5*col*col*(3.-2.*col);ro=ribbons(ww,ro,'
+	DB	'an);gl_FragColor=vec4(col,an)+vec4(ro,0);}', 00H ; `string'
 CONST	ENDS
 PUBLIC	?entrypoint@@YGXXZ				; entrypoint
 PUBLIC	??_C@_06GGHJAEBN@static@			; `string'
@@ -152,7 +152,7 @@ PUBLIC	??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@	; `string'
 PUBLIC	??_C@_0N@ICBDHBI@glUseProgram@			; `string'
 PUBLIC	??_C@_0M@MLICAPOF@glUniform1f@			; `string'
 PUBLIC	__real@3a83126f
-PUBLIC	__real@42b00000
+PUBLIC	__real@43410000
 PUBLIC	__real@4f800000
 EXTRN	__imp__Sleep@4:PROC
 EXTRN	__imp__ExitProcess@4:PROC
@@ -179,9 +179,9 @@ _BSS	ENDS
 CONST	SEGMENT
 __real@4f800000 DD 04f800000r			; 4.29497e+09
 CONST	ENDS
-;	COMDAT __real@42b00000
+;	COMDAT __real@43410000
 CONST	SEGMENT
-__real@42b00000 DD 042b00000r			; 88
+__real@43410000 DD 043410000r			; 193
 CONST	ENDS
 ;	COMDAT __real@3a83126f
 CONST	SEGMENT
@@ -204,7 +204,7 @@ CONST	SEGMENT
 ??_C@_06GGHJAEBN@static@ DB 'static', 00H		; `string'
 CONST	ENDS
 _DATA	SEGMENT
-?fragmentShader@@3PBDB DD FLAT:??_C@_0BAPH@FAKFCMPA@?$CDversion?5430?6uniform?5float?5iGlo@ ; fragmentShader
+?fragmentShader@@3PBDB DD FLAT:??_C@_0BAPG@FKGOJCAO@?$CDversion?5430?6uniform?5float?5iGlo@ ; fragmentShader
 	ORG $+4
 ?screenSettings@@3U_devicemodeA@@A	ORG $+32		; screenSettings
 	DW	00H
@@ -240,7 +240,7 @@ _DATA	ENDS
 ;	COMDAT ?entrypoint@@YGXXZ
 _TEXT	SEGMENT
 _msg$ = -40						; size = 28
-tv174 = -12						; size = 4
+tv137 = -12						; size = 4
 _currentTime$1$ = -12					; size = 4
 _hWnd$1$ = -8						; size = 4
 _hDC$1$ = -4						; size = 4
@@ -338,29 +338,31 @@ _hDC$1$ = -4						; size = 4
 	call	eax
 
 ; 91   : 
-; 92   :     su_render_song(music + 22);
+; 92   :     // duplicate music
+; 93   :     su_render_song(music + 22);
 
 	push	OFFSET ?music@@3PAFA+44
 	call	_su_render_song@4
 
-; 93   :     memcpy(music, wavHeader, 44);
+; 94   :     memcpy(music, wavHeader, 44);
 
 	push	11					; 0000000bH
 	pop	ecx
 
-; 94   :     // play mzk
-; 95   :     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY);
+; 95   : 
+; 96   :     // play mzk
+; 97   :     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
 
-	push	5
+	push	13					; 0000000dH
 	mov	esi, OFFSET ?wavHeader@@3QBHB
 	mov	edi, OFFSET ?music@@3PAFA
 	rep movsd
 	push	OFFSET ?music@@3PAFA
 	call	DWORD PTR __imp__sndPlaySoundA@8
 
-; 96   : 
-; 97   :     MSG msg;
-; 98   :     long to = timeGetTime();
+; 98   : 
+; 99   :     MSG msg;
+; 100  :     long to = timeGetTime();
 
 	call	DWORD PTR __imp__timeGetTime@0
 	mov	esi, DWORD PTR _hDC$1$[ebp]
@@ -368,10 +370,11 @@ _hDC$1$ = -4						; size = 4
 	mov	edi, DWORD PTR _hWnd$1$[ebp]
 $LL4@entrypoint:
 
-; 99   :     float currentTime = 0.f;
-; 100  :     do 
-; 101  :     {
-; 102  :         PeekMessage(&msg,hWnd,0,0,true);
+; 101  :     float currentTime = 0.f;
+; 102  :     float endTime = (SU_LENGTH_IN_SAMPLES * 2 + SU_SAMPLES_PER_ROW * SU_ROWS_PER_PATTERN * 8) / SU_SAMPLE_RATE;
+; 103  :     do 
+; 104  :     {
+; 105  :         PeekMessage(&msg,hWnd,0,0,true);
 
 	push	1
 	push	0
@@ -381,18 +384,18 @@ $LL4@entrypoint:
 	push	eax
 	call	DWORD PTR __imp__PeekMessageA@20
 
-; 103  :         currentTime = (float)(timeGetTime() - to) * 0.001f;
+; 106  :         currentTime = (float)(timeGetTime() - to) * 0.001f;
 
 	call	DWORD PTR __imp__timeGetTime@0
 	sub	eax, ebx
-	mov	DWORD PTR tv174[ebp], eax
-	fild	DWORD PTR tv174[ebp]
+	mov	DWORD PTR tv137[ebp], eax
+	fild	DWORD PTR tv137[ebp]
 	jns	SHORT $LN14@entrypoint
 	fadd	DWORD PTR __real@4f800000
 $LN14@entrypoint:
 	fmul	DWORD PTR __real@3a83126f
 
-; 104  :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
+; 107  :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
 
 	push	ecx
 	fst	DWORD PTR _currentTime$1$[ebp]
@@ -402,7 +405,7 @@ $LN14@entrypoint:
 	call	DWORD PTR __imp__wglGetProcAddress@4
 	call	eax
 
-; 105  :         glRects( -1, -1, 1, 1 );
+; 108  :         glRects( -1, -1, 1, 1 );
 
 	push	1
 	push	1
@@ -410,18 +413,18 @@ $LN14@entrypoint:
 	push	-1
 	call	DWORD PTR __imp__glRects@16
 
-; 106  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
+; 109  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
 
 	push	1
 	push	esi
 	call	DWORD PTR __imp__wglSwapLayerBuffers@8
 
-; 107  :         Sleep(1);
+; 110  :         Sleep(1);
 
 	push	1
 	call	DWORD PTR __imp__Sleep@4
 
-; 108  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < SU_LENGTH_IN_SAMPLES / SU_SAMPLE_RATE);
+; 111  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
 
 	cmp	DWORD PTR _msg$[ebp+4], 256		; 00000100H
 	jne	SHORT $LN7@entrypoint
@@ -429,14 +432,14 @@ $LN14@entrypoint:
 	je	SHORT $LN6@entrypoint
 $LN7@entrypoint:
 	fld	DWORD PTR _currentTime$1$[ebp]
-	fcomp	DWORD PTR __real@42b00000
+	fcomp	DWORD PTR __real@43410000
 	fnstsw	ax
 	test	ah, 5
 	jnp	$LL4@entrypoint
 $LN6@entrypoint:
 
-; 109  : 
-; 110  :     ChangeDisplaySettings( 0, 0 );
+; 112  : 
+; 113  :     ChangeDisplaySettings( 0, 0 );
 
 	mov	ebx, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	xor	esi, esi
@@ -444,20 +447,20 @@ $LN6@entrypoint:
 	push	esi
 	call	ebx
 
-; 111  :     ShowCursor(1);
+; 114  :     ShowCursor(1);
 
 	push	1
 	call	DWORD PTR __imp__ShowCursor@4
 
-; 112  : 
-; 113  :     ExitProcess(0);
+; 115  : 
+; 116  :     ExitProcess(0);
 
 	push	esi
 	call	DWORD PTR __imp__ExitProcess@4
 $LN1@entrypoint:
 	pop	ebx
 
-; 114  : }
+; 117  : }
 
 	pop	edi
 	pop	esi

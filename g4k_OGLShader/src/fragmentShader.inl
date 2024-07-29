@@ -14,7 +14,7 @@ static const char* fragmentShader = \
 "vec3 mandelboxPosition;\n"
 "#define BPM 119.\n"
 "#define BPS (60./BPM)\n"
-"#define DEL 0.\n"
+"#define DEL 0.05\n"
 "#define TT iGlobalTime-DEL\n"
 "float revsaw(float beats)"
 "{"

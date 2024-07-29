@@ -89,14 +89,15 @@ void entrypoint( void )
     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
+    // init music
     su_render_song(music + 22);
     memcpy(music, wavHeader, 44);
-    // play mzk
-    sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY);
+    sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
 
     MSG msg;
     long to = timeGetTime();
     float currentTime = 0.f;
+    float endTime = (SU_LENGTH_IN_SAMPLES * 2 + SU_SAMPLES_PER_ROW * SU_ROWS_PER_PATTERN * 7) / SU_SAMPLE_RATE;
     do 
     {
         PeekMessage(&msg,hWnd,0,0,true);
@@ -105,7 +106,7 @@ void entrypoint( void )
         glRects( -1, -1, 1, 1 );
         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
         Sleep(1);
-    }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < SU_LENGTH_IN_SAMPLES / SU_SAMPLE_RATE);
+    }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
 
     ChangeDisplaySettings( 0, 0 );
     ShowCursor(1);
