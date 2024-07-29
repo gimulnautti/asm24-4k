@@ -149,10 +149,18 @@ CONST	ENDS
 PUBLIC	?entrypoint@@YGXXZ				; entrypoint
 PUBLIC	??_C@_06GGHJAEBN@static@			; `string'
 PUBLIC	??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@	; `string'
+PUBLIC	??_C@_0BC@FAPEBGID@glGenFramebuffers@		; `string'
+PUBLIC	??_C@_0BD@GFHLEJGH@glBindFramebuffers@		; `string'
+PUBLIC	??_C@_0BD@MIGEDNGJ@glGenRenderbuffers@		; `string'
+PUBLIC	??_C@_0BD@EPOPJGFA@glBindRenderbuffer@		; `string'
+PUBLIC	??_C@_0BG@EOIILGMJ@glRenderbufferStorage@	; `string'
+PUBLIC	??_C@_0BF@ENLMLILA@glFramebufferTexture@	; `string'
+PUBLIC	??_C@_0O@COHJKDBH@glDrawBuffers@		; `string'
+PUBLIC	??_C@_0BC@CJMIBNO@glBindFramebuffer@		; `string'
 PUBLIC	??_C@_0N@ICBDHBI@glUseProgram@			; `string'
 PUBLIC	??_C@_0M@MLICAPOF@glUniform1f@			; `string'
 PUBLIC	__real@3a83126f
-PUBLIC	__real@43410000
+PUBLIC	__real@433f0000
 PUBLIC	__real@4f800000
 EXTRN	__imp__Sleep@4:PROC
 EXTRN	__imp__ExitProcess@4:PROC
@@ -169,8 +177,11 @@ EXTRN	__imp__ShowCursor@4:PROC
 EXTRN	__imp__ChangeDisplaySettingsA@8:PROC
 EXTRN	__imp__sndPlaySoundA@8:PROC
 EXTRN	__imp__timeGetTime@0:PROC
+EXTRN	__imp__glBindTexture@8:PROC
+EXTRN	__imp__glGenTextures@8:PROC
 EXTRN	__imp__glRects@16:PROC
-EXTRN	_su_render_song@4:PROC
+EXTRN	__imp__glTexImage2D@36:PROC
+EXTRN	__imp__glTexParameteri@12:PROC
 EXTRN	__fltused:DWORD
 _BSS	SEGMENT
 ?music@@3PAFA DW 0776916H DUP (?)			; music
@@ -179,9 +190,9 @@ _BSS	ENDS
 CONST	SEGMENT
 __real@4f800000 DD 04f800000r			; 4.29497e+09
 CONST	ENDS
-;	COMDAT __real@43410000
+;	COMDAT __real@433f0000
 CONST	SEGMENT
-__real@43410000 DD 043410000r			; 193
+__real@433f0000 DD 0433f0000r			; 191
 CONST	ENDS
 ;	COMDAT __real@3a83126f
 CONST	SEGMENT
@@ -195,6 +206,38 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_0N@ICBDHBI@glUseProgram@ DB 'glUseProgram', 00H	; `string'
 CONST	ENDS
+;	COMDAT ??_C@_0BC@CJMIBNO@glBindFramebuffer@
+CONST	SEGMENT
+??_C@_0BC@CJMIBNO@glBindFramebuffer@ DB 'glBindFramebuffer', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0O@COHJKDBH@glDrawBuffers@
+CONST	SEGMENT
+??_C@_0O@COHJKDBH@glDrawBuffers@ DB 'glDrawBuffers', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BF@ENLMLILA@glFramebufferTexture@
+CONST	SEGMENT
+??_C@_0BF@ENLMLILA@glFramebufferTexture@ DB 'glFramebufferTexture', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BG@EOIILGMJ@glRenderbufferStorage@
+CONST	SEGMENT
+??_C@_0BG@EOIILGMJ@glRenderbufferStorage@ DB 'glRenderbufferStorage', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BD@EPOPJGFA@glBindRenderbuffer@
+CONST	SEGMENT
+??_C@_0BD@EPOPJGFA@glBindRenderbuffer@ DB 'glBindRenderbuffer', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BD@MIGEDNGJ@glGenRenderbuffers@
+CONST	SEGMENT
+??_C@_0BD@MIGEDNGJ@glGenRenderbuffers@ DB 'glGenRenderbuffers', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BD@GFHLEJGH@glBindFramebuffers@
+CONST	SEGMENT
+??_C@_0BD@GFHLEJGH@glBindFramebuffers@ DB 'glBindFramebuffers', 00H ; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BC@FAPEBGID@glGenFramebuffers@
+CONST	SEGMENT
+??_C@_0BC@FAPEBGID@glGenFramebuffers@ DB 'glGenFramebuffers', 00H ; `string'
+CONST	ENDS
 ;	COMDAT ??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@
 CONST	SEGMENT
 ??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@ DB 'glCreateShaderProgramv', 00H ; `string'
@@ -205,7 +248,7 @@ CONST	SEGMENT
 CONST	ENDS
 _DATA	SEGMENT
 ?fragmentShader@@3PBDB DD FLAT:??_C@_0BAPG@FKGOJCAO@?$CDversion?5430?6uniform?5float?5iGlo@ ; fragmentShader
-	ORG $+4
+?imageShader@@3PBDB DD FLAT:??_C@_0CLN@CHDMPCJO@?$CDversion?5430?6varying?5vec2?5fragC@ ; imageShader
 ?screenSettings@@3U_devicemodeA@@A	ORG $+32		; screenSettings
 	DW	00H
 	DW	00H
@@ -239,21 +282,24 @@ _DATA	ENDS
 ; File C:\Users\Tonik\source\repos\asm24-4k\g4k_OGLShader\src\main_win_rel.cpp
 ;	COMDAT ?entrypoint@@YGXXZ
 _TEXT	SEGMENT
-_msg$ = -40						; size = 28
-tv137 = -12						; size = 4
-_currentTime$1$ = -12					; size = 4
-_hWnd$1$ = -8						; size = 4
-_hDC$1$ = -4						; size = 4
+_frameBufferId$ = -64					; size = 4
+_renderTexture$ = -60					; size = 4
+_hDC$1$ = -56						; size = 4
+_currentTime$1$ = -56					; size = 4
+_depthbuffer$ = -52					; size = 4
+_drawBuffers$ = -48					; size = 4
+tv299 = -44						; size = 4
+_hWnd$1$ = -44						; size = 4
+_to$1$ = -40						; size = 4
+_fsId$1$ = -36						; size = 4
+_imgFsId$1$ = -32					; size = 4
+_msg$ = -28						; size = 28
 ?entrypoint@@YGXXZ PROC					; entrypoint, COMDAT
 
 ; 73   : {
 
+	sub	esp, 64					; 00000040H
 	push	ebp
-	mov	ebp, esp
-	sub	esp, 40					; 00000028H
-	push	esi
-	push	edi
-	push	ebx
 
 ; 74   :     // Do NOT do this
 ; 75   :     // SetProcessDpiAwarenessContext( DPI_AWARENESS_CONTEXT_SYSTEM_AWARE );
@@ -261,39 +307,42 @@ _hDC$1$ = -4						; size = 4
 ; 77   :     // full screen
 ; 78   :     if( ChangeDisplaySettings(&screenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return; ShowCursor( 0 );
 
-	mov	ebx, DWORD PTR __imp__ChangeDisplaySettingsA@8
+	mov	ebp, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	push	4
 	push	OFFSET ?screenSettings@@3U_devicemodeA@@A
-	call	ebx
+	call	ebp
 	test	eax, eax
 	jne	$LN1@entrypoint
-	xor	ebx, ebx
 	push	ebx
+	push	esi
+	push	edi
+	xor	ebp, ebp
+	push	ebp
 	call	DWORD PTR __imp__ShowCursor@4
 
 ; 79   :     // create window
 ; 80   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
 
-	push	ebx
-	push	ebx
-	push	ebx
-	push	ebx
+	push	ebp
+	push	ebp
+	push	ebp
+	push	ebp
 	push	720					; 000002d0H
 	push	1280					; 00000500H
-	push	ebx
-	push	ebx
+	push	ebp
+	push	ebp
 	push	-1879048192				; 90000000H
-	push	ebx
+	push	ebp
 	push	OFFSET ??_C@_06GGHJAEBN@static@
-	push	ebx
+	push	ebp
 	call	DWORD PTR __imp__CreateWindowExA@48
 
 ; 81   :     HDC hDC = GetDC(hWnd);
 
 	push	eax
-	mov	DWORD PTR _hWnd$1$[ebp], eax
+	mov	DWORD PTR _hWnd$1$[esp+84], eax
 	call	DWORD PTR __imp__GetDC@4
-	mov	esi, eax
+	mov	ebx, eax
 
 ; 82   :     // initalize opengl
 ; 83   :     SetPixelFormat(hDC,ChoosePixelFormat(hDC,&pfd),&pfd);
@@ -301,57 +350,192 @@ _hDC$1$ = -4						; size = 4
 	mov	eax, OFFSET ?pfd@@3UtagPIXELFORMATDESCRIPTOR@@B
 	push	eax
 	push	eax
-	push	esi
-	mov	DWORD PTR _hDC$1$[ebp], esi
+	push	ebx
+	mov	DWORD PTR _hDC$1$[esp+92], ebx
 	call	DWORD PTR __imp__ChoosePixelFormat@8
 	push	eax
-	push	esi
+	push	ebx
 	call	DWORD PTR __imp__SetPixelFormat@12
 
 ; 84   :     wglMakeCurrent(hDC,wglCreateContext(hDC));
 
-	push	esi
+	push	ebx
 	call	DWORD PTR __imp__wglCreateContext@4
 	push	eax
-	push	esi
+	push	ebx
 	call	DWORD PTR __imp__wglMakeCurrent@8
 
 ; 85   : 
 ; 86   :     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
 ; 87   : 
-; 88   :     // init intro
+; 88   :     // init opengl
 ; 89   :     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
 
-	mov	esi, DWORD PTR __imp__wglGetProcAddress@4
+	mov	ebx, DWORD PTR __imp__wglGetProcAddress@4
+	mov	edi, 35632				; 00008b30H
 	push	OFFSET ?fragmentShader@@3PBDB
 	push	1
-	push	35632					; 00008b30H
-	push	OFFSET ??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@
-	call	esi
+	push	edi
+	mov	esi, OFFSET ??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@
+	push	esi
+	call	ebx
 	call	eax
 
-; 90   :     ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
+; 90   :     const unsigned int imgFsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &imageShader);
 
-	push	eax
-	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
-	call	esi
+	push	OFFSET ?imageShader@@3PBDB
+	push	1
+	push	edi
+	push	esi
+	mov	DWORD PTR _fsId$1$[esp+96], eax
+	call	ebx
 	call	eax
+	mov	DWORD PTR _imgFsId$1$[esp+80], eax
 
 ; 91   : 
-; 92   :     // duplicate music
-; 93   :     su_render_song(music + 22);
+; 92   :     GLuint frameBufferId = 0;
+; 93   :     ((PFNGLGENFRAMEBUFFERSPROC)wglGetProcAddress("glGenFramebuffers"))(1, &frameBufferId);
 
-	push	OFFSET ?music@@3PAFA+44
-	call	_su_render_song@4
+	lea	eax, DWORD PTR _frameBufferId$[esp+80]
+	push	eax
+	push	1
+	push	OFFSET ??_C@_0BC@FAPEBGID@glGenFramebuffers@
+	mov	DWORD PTR _frameBufferId$[esp+92], ebp
+	call	ebx
+	call	eax
 
-; 94   :     memcpy(music, wavHeader, 44);
+; 94   :     ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffers"))(GL_FRAMEBUFFER, frameBufferId);
+
+	push	DWORD PTR _frameBufferId$[esp+80]
+	push	36160					; 00008d40H
+	push	OFFSET ??_C@_0BD@GFHLEJGH@glBindFramebuffers@
+	call	ebx
+	call	eax
+
+; 95   : 
+; 96   :     GLuint renderTexture;
+; 97   :     glGenTextures(1, &renderTexture);
+
+	lea	eax, DWORD PTR _renderTexture$[esp+80]
+	push	eax
+	push	1
+	call	DWORD PTR __imp__glGenTextures@8
+
+; 98   :     glBindTexture(GL_TEXTURE_2D, renderTexture);
+
+	push	DWORD PTR _renderTexture$[esp+80]
+	mov	ebp, 3553				; 00000de1H
+	push	ebp
+	call	DWORD PTR __imp__glBindTexture@8
+
+; 99   :     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, XRES, YRES, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	xor	ecx, ecx
+	mov	eax, 6407				; 00001907H
+	push	ecx
+	push	5121					; 00001401H
+	push	eax
+	push	ecx
+	push	720					; 000002d0H
+	push	1280					; 00000500H
+	push	eax
+	push	ecx
+	push	ebp
+	call	DWORD PTR __imp__glTexImage2D@36
+
+; 100  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	mov	esi, DWORD PTR __imp__glTexParameteri@12
+	mov	edi, 9728				; 00002600H
+	push	edi
+	push	10240					; 00002800H
+	push	ebp
+	call	esi
+
+; 101  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	push	edi
+	push	10241					; 00002801H
+	push	ebp
+	call	esi
+
+; 102  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+
+	mov	edi, 10496				; 00002900H
+	push	edi
+	push	10242					; 00002802H
+	push	ebp
+	call	esi
+
+; 103  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	push	edi
+	push	10243					; 00002803H
+	push	ebp
+	call	esi
+
+; 104  : 
+; 105  :     GLuint depthbuffer;
+; 106  :     ((PFNGLGENRENDERBUFFERSPROC)wglGetProcAddress("glGenRenderbuffers"))(1, &depthbuffer);
+
+	lea	eax, DWORD PTR _depthbuffer$[esp+80]
+	push	eax
+	push	1
+	push	OFFSET ??_C@_0BD@MIGEDNGJ@glGenRenderbuffers@
+	call	ebx
+	call	eax
+
+; 107  :     ((PFNGLBINDRENDERBUFFERPROC)wglGetProcAddress("glBindRenderbuffer"))(GL_RENDERBUFFER, depthbuffer);
+
+	push	DWORD PTR _depthbuffer$[esp+80]
+	mov	esi, 36161				; 00008d41H
+	push	esi
+	push	OFFSET ??_C@_0BD@EPOPJGFA@glBindRenderbuffer@
+	call	ebx
+	call	eax
+
+; 108  :     ((PFNGLRENDERBUFFERSTORAGEPROC)wglGetProcAddress("glRenderbufferStorage"))(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, XRES, YRES);
+
+	push	720					; 000002d0H
+	push	1280					; 00000500H
+	push	6402					; 00001902H
+	push	esi
+	push	OFFSET ??_C@_0BG@EOIILGMJ@glRenderbufferStorage@
+	call	ebx
+	call	eax
+
+; 109  : 
+; 110  :     ((PFNGLFRAMEBUFFERTEXTUREPROC)wglGetProcAddress("glFramebufferTexture"))(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderTexture, 0);
+
+	push	0
+	push	DWORD PTR _renderTexture$[esp+84]
+	add	esi, -97				; ffffff9fH
+	push	esi
+	push	36160					; 00008d40H
+	push	OFFSET ??_C@_0BF@ENLMLILA@glFramebufferTexture@
+	call	ebx
+	call	eax
+
+; 111  :     GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+; 112  :     ((PFNGLDRAWBUFFERSPROC)wglGetProcAddress("glDrawBuffers"))(1, drawBuffers);
+
+	lea	eax, DWORD PTR _drawBuffers$[esp+80]
+	mov	DWORD PTR _drawBuffers$[esp+80], esi
+	push	eax
+	push	1
+	push	OFFSET ??_C@_0O@COHJKDBH@glDrawBuffers@
+	call	ebx
+	call	eax
+
+; 113  : 
+; 114  :     // init music
+; 115  :     //su_render_song(music + 22);
+; 116  :     memcpy(music, wavHeader, 44);
 
 	push	11					; 0000000bH
 	pop	ecx
 
-; 95   : 
-; 96   :     // play mzk
-; 97   :     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
+; 117  :     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
 
 	push	13					; 0000000dH
 	mov	esi, OFFSET ?wavHeader@@3QBHB
@@ -360,111 +544,156 @@ _hDC$1$ = -4						; size = 4
 	push	OFFSET ?music@@3PAFA
 	call	DWORD PTR __imp__sndPlaySoundA@8
 
-; 98   : 
-; 99   :     MSG msg;
-; 100  :     long to = timeGetTime();
+; 118  : 
+; 119  :     MSG msg;
+; 120  :     long to = timeGetTime();
 
 	call	DWORD PTR __imp__timeGetTime@0
-	mov	esi, DWORD PTR _hDC$1$[ebp]
-	mov	ebx, eax
-	mov	edi, DWORD PTR _hWnd$1$[ebp]
+	mov	esi, DWORD PTR __imp__glRects@16
+	mov	edi, DWORD PTR _hDC$1$[esp+80]
+	mov	ebp, DWORD PTR _hWnd$1$[esp+80]
+	mov	DWORD PTR _to$1$[esp+80], eax
 $LL4@entrypoint:
 
-; 101  :     float currentTime = 0.f;
-; 102  :     float endTime = (SU_LENGTH_IN_SAMPLES * 2 + SU_SAMPLES_PER_ROW * SU_ROWS_PER_PATTERN * 8) / SU_SAMPLE_RATE;
-; 103  :     do 
-; 104  :     {
-; 105  :         PeekMessage(&msg,hWnd,0,0,true);
+; 121  :     float currentTime = 0.f;
+; 122  :     float endTime = (SU_LENGTH_IN_SAMPLES * 2 + SU_SAMPLES_PER_ROW * SU_ROWS_PER_PATTERN * 7) / SU_SAMPLE_RATE;
+; 123  :     do 
+; 124  :     {
+; 125  :         PeekMessage(&msg,hWnd,0,0,true);
 
 	push	1
 	push	0
 	push	0
-	push	edi
-	lea	eax, DWORD PTR _msg$[ebp]
+	push	ebp
+	lea	eax, DWORD PTR _msg$[esp+96]
 	push	eax
 	call	DWORD PTR __imp__PeekMessageA@20
 
-; 106  :         currentTime = (float)(timeGetTime() - to) * 0.001f;
+; 126  :         currentTime = (float)(timeGetTime() - to) * 0.001f;
 
 	call	DWORD PTR __imp__timeGetTime@0
-	sub	eax, ebx
-	mov	DWORD PTR tv137[ebp], eax
-	fild	DWORD PTR tv137[ebp]
+	sub	eax, DWORD PTR _to$1$[esp+80]
+	mov	DWORD PTR tv299[esp+80], eax
+	fild	DWORD PTR tv299[esp+80]
 	jns	SHORT $LN14@entrypoint
 	fadd	DWORD PTR __real@4f800000
 $LN14@entrypoint:
+
+; 127  : 
+; 128  :         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, frameBufferId);
+
+	push	DWORD PTR _frameBufferId$[esp+80]
 	fmul	DWORD PTR __real@3a83126f
+	push	36160					; 00008d40H
+	push	OFFSET ??_C@_0BC@CJMIBNO@glBindFramebuffer@
+	fstp	DWORD PTR _currentTime$1$[esp+92]
+	call	ebx
+	call	eax
 
-; 107  :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
+; 129  :         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
+	push	DWORD PTR _fsId$1$[esp+80]
+	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
+	call	ebx
+	call	eax
+
+; 130  :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
+
+	fld	DWORD PTR _currentTime$1$[esp+80]
 	push	ecx
-	fst	DWORD PTR _currentTime$1$[ebp]
 	fstp	DWORD PTR [esp]
 	push	0
 	push	OFFSET ??_C@_0M@MLICAPOF@glUniform1f@
-	call	DWORD PTR __imp__wglGetProcAddress@4
+	call	ebx
 	call	eax
 
-; 108  :         glRects( -1, -1, 1, 1 );
+; 131  :         glRects( -1, -1, 1, 1 );
 
 	push	1
 	push	1
 	push	-1
 	push	-1
-	call	DWORD PTR __imp__glRects@16
+	call	esi
 
-; 109  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
+; 132  : 
+; 133  :         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, 0);
+
+	push	0
+	push	36160					; 00008d40H
+	push	OFFSET ??_C@_0BC@CJMIBNO@glBindFramebuffer@
+	call	ebx
+	call	eax
+
+; 134  :         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(imgFsId);
+
+	push	DWORD PTR _imgFsId$1$[esp+80]
+	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
+	call	ebx
+	call	eax
+
+; 135  :         glRects(-1, -1, 1, 1);
 
 	push	1
-	push	esi
+	push	1
+	push	-1
+	push	-1
+	call	esi
+
+; 136  : 
+; 137  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE );
+
+	push	1
+	push	edi
 	call	DWORD PTR __imp__wglSwapLayerBuffers@8
 
-; 110  :         Sleep(1);
+; 138  :         Sleep(1);
 
 	push	1
 	call	DWORD PTR __imp__Sleep@4
 
-; 111  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
+; 139  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
 
-	cmp	DWORD PTR _msg$[ebp+4], 256		; 00000100H
+	cmp	DWORD PTR _msg$[esp+84], 256		; 00000100H
 	jne	SHORT $LN7@entrypoint
-	cmp	DWORD PTR _msg$[ebp+8], 27		; 0000001bH
+	cmp	DWORD PTR _msg$[esp+88], 27		; 0000001bH
 	je	SHORT $LN6@entrypoint
 $LN7@entrypoint:
-	fld	DWORD PTR _currentTime$1$[ebp]
-	fcomp	DWORD PTR __real@43410000
+	fld	DWORD PTR _currentTime$1$[esp+80]
+	fcomp	DWORD PTR __real@433f0000
 	fnstsw	ax
 	test	ah, 5
 	jnp	$LL4@entrypoint
 $LN6@entrypoint:
 
-; 112  : 
-; 113  :     ChangeDisplaySettings( 0, 0 );
+; 140  : 
+; 141  :     ChangeDisplaySettings( 0, 0 );
 
-	mov	ebx, DWORD PTR __imp__ChangeDisplaySettingsA@8
-	xor	esi, esi
-	push	esi
-	push	esi
-	call	ebx
+	mov	ebp, DWORD PTR __imp__ChangeDisplaySettingsA@8
+	xor	ebx, ebx
+	push	ebx
+	push	ebx
+	call	ebp
 
-; 114  :     ShowCursor(1);
+; 142  :     ShowCursor(1);
 
 	push	1
 	call	DWORD PTR __imp__ShowCursor@4
 
-; 115  : 
-; 116  :     ExitProcess(0);
+; 143  : 
+; 144  :     ExitProcess(0);
 
-	push	esi
+	push	ebx
 	call	DWORD PTR __imp__ExitProcess@4
-$LN1@entrypoint:
-	pop	ebx
-
-; 117  : }
-
 	pop	edi
 	pop	esi
-	leave
+	pop	ebx
+$LN17@entrypoint:
+$LN1@entrypoint:
+	pop	ebp
+
+; 145  : }
+
+	add	esp, 64					; 00000040H
 	ret	0
 $LN15@entrypoint:
 ?entrypoint@@YGXXZ ENDP					; entrypoint
