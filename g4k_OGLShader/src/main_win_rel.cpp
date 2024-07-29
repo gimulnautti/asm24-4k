@@ -132,6 +132,7 @@ void entrypoint( void )
 
         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, 0);
         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(imgFsId);
+        glBindTexture(GL_TEXTURE_2D, renderTexture);
         glRects(-1, -1, 1, 1);
 
         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE );
