@@ -328,7 +328,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    su_render_song(myMuzik);
+    //su_render_song(myMuzik);
     memcpy(myMuzik + 22, myMuzik, SU_BUFFER_LENGTH);
     memcpy(myMuzik, wavHeader, 44);
 
