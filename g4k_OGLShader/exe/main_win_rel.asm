@@ -288,7 +288,7 @@ _hDC$1$ = -56						; size = 4
 _currentTime$1$ = -56					; size = 4
 _depthbuffer$ = -52					; size = 4
 _drawBuffers$ = -48					; size = 4
-tv299 = -44						; size = 4
+tv301 = -44						; size = 4
 _hWnd$1$ = -44						; size = 4
 _to$1$ = -40						; size = 4
 _fsId$1$ = -36						; size = 4
@@ -316,25 +316,26 @@ _msg$ = -28						; size = 28
 	push	ebx
 	push	esi
 	push	edi
-	xor	ebp, ebp
-	push	ebp
+	xor	ebx, ebx
+	push	ebx
 	call	DWORD PTR __imp__ShowCursor@4
 
 ; 79   :     // create window
 ; 80   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
 
-	push	ebp
-	push	ebp
-	push	ebp
-	push	ebp
+	push	ebx
+	push	ebx
+	push	ebx
+	push	ebx
 	push	720					; 000002d0H
-	push	1280					; 00000500H
+	mov	ebp, 1280				; 00000500H
 	push	ebp
-	push	ebp
+	push	ebx
+	push	ebx
 	push	-1879048192				; 90000000H
-	push	ebp
+	push	ebx
 	push	OFFSET ??_C@_06GGHJAEBN@static@
-	push	ebp
+	push	ebx
 	call	DWORD PTR __imp__CreateWindowExA@48
 
 ; 81   :     HDC hDC = GetDC(hWnd);
@@ -394,13 +395,16 @@ _msg$ = -28						; size = 28
 
 ; 91   : 
 ; 92   :     GLuint frameBufferId = 0;
+
+	xor	esi, esi
+
 ; 93   :     ((PFNGLGENFRAMEBUFFERSPROC)wglGetProcAddress("glGenFramebuffers"))(1, &frameBufferId);
 
 	lea	eax, DWORD PTR _frameBufferId$[esp+80]
+	mov	DWORD PTR _frameBufferId$[esp+80], esi
 	push	eax
 	push	1
 	push	OFFSET ??_C@_0BC@FAPEBGID@glGenFramebuffers@
-	mov	DWORD PTR _frameBufferId$[esp+92], ebp
 	call	ebx
 	call	eax
 
@@ -424,23 +428,22 @@ _msg$ = -28						; size = 28
 ; 98   :     glBindTexture(GL_TEXTURE_2D, renderTexture);
 
 	push	DWORD PTR _renderTexture$[esp+80]
-	mov	ebp, 3553				; 00000de1H
-	push	ebp
+	mov	edi, 3553				; 00000de1H
+	push	edi
 	call	DWORD PTR __imp__glBindTexture@8
 
 ; 99   :     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, XRES, YRES, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
-	xor	ecx, ecx
-	mov	eax, 6407				; 00001907H
-	push	ecx
+	push	esi
 	push	5121					; 00001401H
+	mov	eax, 6407				; 00001907H
 	push	eax
-	push	ecx
+	push	esi
 	push	720					; 000002d0H
-	push	1280					; 00000500H
-	push	eax
-	push	ecx
 	push	ebp
+	push	eax
+	push	esi
+	push	edi
 	call	DWORD PTR __imp__glTexImage2D@36
 
 ; 100  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -449,14 +452,14 @@ _msg$ = -28						; size = 28
 	mov	edi, 9728				; 00002600H
 	push	edi
 	push	10240					; 00002800H
-	push	ebp
+	push	3553					; 00000de1H
 	call	esi
 
 ; 101  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	push	edi
 	push	10241					; 00002801H
-	push	ebp
+	push	3553					; 00000de1H
 	call	esi
 
 ; 102  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -464,14 +467,14 @@ _msg$ = -28						; size = 28
 	mov	edi, 10496				; 00002900H
 	push	edi
 	push	10242					; 00002802H
-	push	ebp
+	push	3553					; 00000de1H
 	call	esi
 
 ; 103  :     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
 	push	edi
 	push	10243					; 00002803H
-	push	ebp
+	push	3553					; 00000de1H
 	call	esi
 
 ; 104  : 
@@ -497,7 +500,7 @@ _msg$ = -28						; size = 28
 ; 108  :     ((PFNGLRENDERBUFFERSTORAGEPROC)wglGetProcAddress("glRenderbufferStorage"))(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, XRES, YRES);
 
 	push	720					; 000002d0H
-	push	1280					; 00000500H
+	push	ebp
 	push	6402					; 00001902H
 	push	esi
 	push	OFFSET ??_C@_0BG@EOIILGMJ@glRenderbufferStorage@
@@ -573,8 +576,8 @@ $LL4@entrypoint:
 
 	call	DWORD PTR __imp__timeGetTime@0
 	sub	eax, DWORD PTR _to$1$[esp+80]
-	mov	DWORD PTR tv299[esp+80], eax
-	fild	DWORD PTR tv299[esp+80]
+	mov	DWORD PTR tv301[esp+80], eax
+	fild	DWORD PTR tv301[esp+80]
 	jns	SHORT $LN14@entrypoint
 	fadd	DWORD PTR __real@4f800000
 $LN14@entrypoint:
@@ -631,7 +634,13 @@ $LN14@entrypoint:
 	call	ebx
 	call	eax
 
-; 135  :         glRects(-1, -1, 1, 1);
+; 135  :         glBindTexture(GL_TEXTURE_2D, renderTexture);
+
+	push	DWORD PTR _renderTexture$[esp+80]
+	push	3553					; 00000de1H
+	call	DWORD PTR __imp__glBindTexture@8
+
+; 136  :         glRects(-1, -1, 1, 1);
 
 	push	1
 	push	1
@@ -639,19 +648,19 @@ $LN14@entrypoint:
 	push	-1
 	call	esi
 
-; 136  : 
-; 137  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE );
+; 137  : 
+; 138  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE );
 
 	push	1
 	push	edi
 	call	DWORD PTR __imp__wglSwapLayerBuffers@8
 
-; 138  :         Sleep(1);
+; 139  :         Sleep(1);
 
 	push	1
 	call	DWORD PTR __imp__Sleep@4
 
-; 139  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
+; 140  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
 
 	cmp	DWORD PTR _msg$[esp+84], 256		; 00000100H
 	jne	SHORT $LN7@entrypoint
@@ -665,8 +674,8 @@ $LN7@entrypoint:
 	jnp	$LL4@entrypoint
 $LN6@entrypoint:
 
-; 140  : 
-; 141  :     ChangeDisplaySettings( 0, 0 );
+; 141  : 
+; 142  :     ChangeDisplaySettings( 0, 0 );
 
 	mov	ebp, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	xor	ebx, ebx
@@ -674,13 +683,13 @@ $LN6@entrypoint:
 	push	ebx
 	call	ebp
 
-; 142  :     ShowCursor(1);
+; 143  :     ShowCursor(1);
 
 	push	1
 	call	DWORD PTR __imp__ShowCursor@4
 
-; 143  : 
-; 144  :     ExitProcess(0);
+; 144  : 
+; 145  :     ExitProcess(0);
 
 	push	ebx
 	call	DWORD PTR __imp__ExitProcess@4
@@ -691,7 +700,7 @@ $LN17@entrypoint:
 $LN1@entrypoint:
 	pop	ebp
 
-; 145  : }
+; 146  : }
 
 	add	esp, 64					; 00000040H
 	ret	0

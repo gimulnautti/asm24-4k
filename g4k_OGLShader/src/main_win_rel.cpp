@@ -106,13 +106,14 @@ void entrypoint( void )
     ((PFNGLGENRENDERBUFFERSPROC)wglGetProcAddress("glGenRenderbuffers"))(1, &depthbuffer);
     ((PFNGLBINDRENDERBUFFERPROC)wglGetProcAddress("glBindRenderbuffer"))(GL_RENDERBUFFER, depthbuffer);
     ((PFNGLRENDERBUFFERSTORAGEPROC)wglGetProcAddress("glRenderbufferStorage"))(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, XRES, YRES);
+    ((PFNGLFRAMEBUFFERRENDERBUFFERPROC)wglGetProcAddress("glFramebufferRenderbuffer"))(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthbuffer);
 
     ((PFNGLFRAMEBUFFERTEXTUREPROC)wglGetProcAddress("glFramebufferTexture"))(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderTexture, 0);
     GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
     ((PFNGLDRAWBUFFERSPROC)wglGetProcAddress("glDrawBuffers"))(1, drawBuffers);
 
     // init music
-    //su_render_song(music + 22);
+    su_render_song(music + 22);
     memcpy(music, wavHeader, 44);
     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
 
