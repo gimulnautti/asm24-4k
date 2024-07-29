@@ -15,7 +15,7 @@
 #include "glext.h"
 #include "fragmentShader.inl"
 #include "imageShader.h"
-#include "basssong.h"
+#include "basssong-short.h"
 
 //==============================================================================================
 
@@ -58,7 +58,7 @@ static WININFO wininfo = {  0,0,0,0,0,
 
 static const int wavHeader[11] = {
     0x46464952,
-    SU_BUFFER_LENGTH + 36,
+    SU_BUFFER_LENGTH * 2 + 36,
     0x45564157,
     0x20746D66,
     16,
@@ -67,7 +67,9 @@ static const int wavHeader[11] = {
     SU_SAMPLE_RATE* SU_CHANNEL_COUNT * sizeof(short),
     (SU_CHANNEL_COUNT * sizeof(short)) | ((8 * sizeof(short)) << 16),
     0x61746164,
-    SU_BUFFER_LENGTH * sizeof(short) };
+    SU_BUFFER_LENGTH * 2 * sizeof(short) };
+
+static short myMuzik[SU_BUFFER_LENGTH * 2 + 22];
 
 #define NUMFUNCIONES 15
 
@@ -236,7 +238,6 @@ static int window_init( WININFO *info )
     return( 1 );
 }
 
-static short myMuzik[SU_BUFFER_LENGTH + 22];
 
 //==============================================================================================
 
@@ -327,7 +328,8 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
-    //su_render_song(myMuzik);
+    su_render_song(myMuzik);
+    memcpy(myMuzik + 22, myMuzik, SU_BUFFER_LENGTH);
     memcpy(myMuzik, wavHeader, 44);
 
     if (!sndPlaySound((const char*)&myMuzik, SND_ASYNC | SND_MEMORY))
@@ -340,7 +342,7 @@ int WINAPI WinMain( HINSTANCE instance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     long to = timeGetTime();
     float currentTime = 0.f;
 
-    while (!done && currentTime < SU_LENGTH_IN_SAMPLES / SU_SAMPLE_RATE)
+    while (!done && currentTime < SU_LENGTH_IN_SAMPLES * 2 / SU_SAMPLE_RATE)
     {
         while( PeekMessage(&msg,0,0,0,PM_REMOVE) )
         {

@@ -128,7 +128,7 @@
     <Bscmake />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\basssong.h" />
+    <ClInclude Include="src\basssong-short.h" />
     <ClInclude Include="src\fp.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\imageShader.h" />
@@ -147,7 +147,7 @@
     <None Include="src\fragmentShader.inl" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="src\basssong.obj" />
+    <Object Include="src\basssong-short.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,8 +12,7 @@
 #include "glext.h"
 #include "fragmentShader.inl"
 #include "imageShader.h"
-#include "basssong.h"
-
+#include "basssong-short.h"
 
 //----------------------------------------------------------------------------
 
