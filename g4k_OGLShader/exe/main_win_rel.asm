@@ -126,14 +126,13 @@ PUBLIC	?entrypoint@@YGXXZ				; entrypoint
 PUBLIC	??_C@_06GGHJAEBN@static@			; `string'
 PUBLIC	??_C@_0BH@BOJGDFJN@glCreateShaderProgramv@	; `string'
 PUBLIC	??_C@_0BC@FAPEBGID@glGenFramebuffers@		; `string'
-PUBLIC	??_C@_0BD@GFHLEJGH@glBindFramebuffers@		; `string'
+PUBLIC	??_C@_0BC@CJMIBNO@glBindFramebuffer@		; `string'
 PUBLIC	??_C@_0BD@MIGEDNGJ@glGenRenderbuffers@		; `string'
 PUBLIC	??_C@_0BD@EPOPJGFA@glBindRenderbuffer@		; `string'
 PUBLIC	??_C@_0BG@EOIILGMJ@glRenderbufferStorage@	; `string'
 PUBLIC	??_C@_0BK@OJDINAOA@glFramebufferRenderbuffer@	; `string'
 PUBLIC	??_C@_0BF@ENLMLILA@glFramebufferTexture@	; `string'
 PUBLIC	??_C@_0O@COHJKDBH@glDrawBuffers@		; `string'
-PUBLIC	??_C@_0BC@CJMIBNO@glBindFramebuffer@		; `string'
 PUBLIC	??_C@_0N@ICBDHBI@glUseProgram@			; `string'
 PUBLIC	??_C@_0M@MLICAPOF@glUniform1f@			; `string'
 PUBLIC	__real@3a83126f
@@ -184,10 +183,6 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_0N@ICBDHBI@glUseProgram@ DB 'glUseProgram', 00H	; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0BC@CJMIBNO@glBindFramebuffer@
-CONST	SEGMENT
-??_C@_0BC@CJMIBNO@glBindFramebuffer@ DB 'glBindFramebuffer', 00H ; `string'
-CONST	ENDS
 ;	COMDAT ??_C@_0O@COHJKDBH@glDrawBuffers@
 CONST	SEGMENT
 ??_C@_0O@COHJKDBH@glDrawBuffers@ DB 'glDrawBuffers', 00H ; `string'
@@ -213,9 +208,9 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_0BD@MIGEDNGJ@glGenRenderbuffers@ DB 'glGenRenderbuffers', 00H ; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0BD@GFHLEJGH@glBindFramebuffers@
+;	COMDAT ??_C@_0BC@CJMIBNO@glBindFramebuffer@
 CONST	SEGMENT
-??_C@_0BD@GFHLEJGH@glBindFramebuffers@ DB 'glBindFramebuffers', 00H ; `string'
+??_C@_0BC@CJMIBNO@glBindFramebuffer@ DB 'glBindFramebuffer', 00H ; `string'
 CONST	ENDS
 ;	COMDAT ??_C@_0BC@FAPEBGID@glGenFramebuffers@
 CONST	SEGMENT
@@ -356,7 +351,7 @@ _msg$ = -28						; size = 28
 ; 87   :     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
 ; 88   : 
 ; 89   :     // init opengl
-; 90   :     const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
+; 90   :     const GLuint fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
 
 	mov	ebx, DWORD PTR __imp__wglGetProcAddress@4
 	mov	edi, 35632				; 00008b30H
@@ -368,7 +363,7 @@ _msg$ = -28						; size = 28
 	call	ebx
 	call	eax
 
-; 91   :     const unsigned int imgFsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &imageShader);
+; 91   :     const GLuint imgFsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &imageShader);
 
 	push	OFFSET ?imageShader@@3PBDB
 	push	1
@@ -394,11 +389,11 @@ _msg$ = -28						; size = 28
 	call	ebx
 	call	eax
 
-; 95   :     ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffers"))(GL_FRAMEBUFFER, frameBufferId);
+; 95   :     ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, frameBufferId);
 
 	push	DWORD PTR _frameBufferId$[esp+80]
 	push	36160					; 00008d40H
-	push	OFFSET ??_C@_0BD@GFHLEJGH@glBindFramebuffers@
+	push	OFFSET ??_C@_0BC@CJMIBNO@glBindFramebuffer@
 	call	ebx
 	call	eax
 

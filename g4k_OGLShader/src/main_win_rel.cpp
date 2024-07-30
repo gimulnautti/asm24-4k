@@ -87,12 +87,12 @@ void entrypoint( void )
     //wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE ); //SwapBuffers( hDC );
 
     // init opengl
-    const unsigned int fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
-    const unsigned int imgFsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &imageShader);
+    const GLuint fsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragmentShader);
+    const GLuint imgFsId = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &imageShader);
 
     GLuint frameBufferId = 0;
     ((PFNGLGENFRAMEBUFFERSPROC)wglGetProcAddress("glGenFramebuffers"))(1, &frameBufferId);
-    ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffers"))(GL_FRAMEBUFFER, frameBufferId);
+    ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, frameBufferId);
 
     GLuint renderTexture;
     glGenTextures(1, &renderTexture);
