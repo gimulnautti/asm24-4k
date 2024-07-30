@@ -6,27 +6,34 @@ mat3 rotate_x(float a){float sa = sin(a); float ca = cos(a); return mat3(vec3(1.
 
 vec3 mandelboxPosition;
 
-#define BPM 119.
-#define BPS (60. / BPM)
-#define DEL -0.05
-#define TT iGlobalTime - DEL
+//#define BPM 119.
+//#define BPS (60. / BPM)
+#define BPS 0.50420168
+
+//#define DEL -0.05
+//#define TT iGlobalTime - DEL
+
+float tt()
+{
+    return iGlobalTime + 0.05;
+}
 
 float revsaw(float beats)
 {
     float wavel = BPS * beats;
-    return smoothstep(0., 1., 1. - mod(TT, wavel) / wavel);
+    return smoothstep(0., 1., 1. - mod(tt(), wavel) / wavel);
 }
 
 float square(float beats)
 {
     float wavel = BPS * beats;
-    return (mod(TT, wavel) / wavel) < .5 ? 0. : 1.;
+    return (mod(tt(), wavel) / wavel) < .5 ? 0. : 1.;
 }
 
 float beatstep(float beats)
 {
     float wavel = BPS * beats;
-    return (TT) < wavel ? 0. : 1.;
+    return tt() < wavel ? 0. : 1.;
 }
 
 float sdTorus(in vec3 p, in vec2 t)
@@ -249,9 +256,9 @@ vec3 ribbons( in vec3 rd, in vec3 ro, in float boxDepth )
     
 void main( void )
 {
-    // fragment position
-    vec2 ir = vec2(1280,720);
-    vec2 p = (-ir.xy + 2.0*gl_FragCoord.xy)/ir.y;
+    // fragment position  
+    vec2 iResolution = vec2(1280,720);
+    vec2 p = (-iResolution.xy + 2.0*gl_FragCoord.xy)/iResolution.y;
 
     // camera movement	
 	float an = 0.05*(iGlobalTime) + sin(iGlobalTime * 0.1) * p.y * sin(iGlobalTime * 0.05) * 2.;
