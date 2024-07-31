@@ -9,8 +9,8 @@
 INCLUDELIB LIBCMT
 INCLUDELIB OLDNAMES
 
-PUBLIC	??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@ ; `string'
-PUBLIC	??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ ; `string'
+PUBLIC	??_C@_0MEE@FOHHDFJH@?$CDversion?5430?6uniform?5float?5v?$DLma@ ; `string'
+PUBLIC	??_C@_0BLC@JIHBMBFH@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ ; `string'
 PUBLIC	__fltused
 _BSS	SEGMENT
 __fltused DD	01H DUP (?)
@@ -54,21 +54,21 @@ CONST	SEGMENT
 	DD	061746164H
 	DD	0eed200H
 CONST	ENDS
-;	COMDAT ??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@
+;	COMDAT ??_C@_0BLC@JIHBMBFH@?$CDversion?5430?6varying?5vec2?5m?$DLuni@
 CONST	SEGMENT
-??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ DB '#versi'
+??_C@_0BLC@JIHBMBFH@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ DB '#versi'
 	DB	'on 430', 0aH, 'varying vec2 m;uniform sampler2D v;vec4 x(vec2'
 	DB	' m){float p=1.;vec4 y=vec4(0);for(float f=-5.;f<=5.;f+=1.)for'
 	DB	'(float i=-5.;i<=5.;i+=1.){vec4 r=texture2D(v,m+vec2(f,i)*(vec'
-	DB	'2(7)/vec2(1280,720)));if(max(r.x,max(r.y,r.z))>.8){float v=le'
+	DB	'2(7)/vec2(2560,720)));if(max(r.x,max(r.y,r.z))>.8){float v=le'
 	DB	'ngth(vec2(f,i))+1.;vec4 m=max(r*128./pow(v,2.),vec4(0));if(ma'
 	DB	'x(m.x,max(m.y,m.z))>.9)y+=m,p+=1.;}}return y/p;}void main(){v'
 	DB	'ec2 r=m.xy/vec2(2).xy+vec2(.5);gl_FragColor=texture2D(v,r)+.0'
 	DB	'5*x(r);}', 00H				; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@
+;	COMDAT ??_C@_0MEE@FOHHDFJH@?$CDversion?5430?6uniform?5float?5v?$DLma@
 CONST	SEGMENT
-??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@ DB '#versi'
+??_C@_0MEE@FOHHDFJH@?$CDversion?5430?6uniform?5float?5v?$DLma@ DB '#versi'
 	DB	'on 430', 0aH, 'uniform float v;mat3 n(float v){float f=sin(v)'
 	DB	';v=cos(v);return mat3(vec3(1,0,0),vec3(0,v,f),vec3(0,-f,v));}'
 	DB	'vec3 f;', 0aH, '#define BPS 0.50420168', 0aH, 'float n(){retu'
@@ -108,11 +108,11 @@ CONST	SEGMENT
 	DB	'3 d(vec3 v,vec3 f,float m){float i=0.;vec3 r;float s=0.;for(i'
 	DB	'nt m=0;m<64;m++){r=f+i*v;vec2 c=h(r);float e=c.x;if(e<1e-4){s'
 	DB	'=c.y;break;}else if(i>15.)break;i+=e;}return i<15.&&i<m?e(s):'
-	DB	'vec3(0);}void main(){vec2 c=vec2(1280,720);c=(-c.xy+2.*gl_Fra'
+	DB	'vec3(0);}void main(){vec2 c=vec2(2560,720);c=(-c.xy+2.*gl_Fra'
 	DB	'gCoord.xy)/c.y;float y=.05*v+sin(v*.1)*c.y*sin(v*.05)*2.;y*=s'
 	DB	'()*2.-1.;vec3 l=vec3(8.*cos(y),.6,8.*sin(y)),n=normalize(vec3'
 	DB	'(0,sin(v*.5),0)-l),z=normalize(cross(n,vec3(0,.6,.5)));n=norm'
-	DB	'alize(c.x*z+c.y*normalize(cross(z,n))+1.5*n);y=0.;float t=1e5'
+	DB	'alize(c.x*z+c.y*normalize(cross(z,n))+2.5*n);y=0.;float t=1e5'
 	DB	',b=0.;for(int v=0;v<128;v++){z=l+y*n;float f=i(z);if(f<.00015'
 	DB	'){vec2 f=h(z);t=f.x;b=f.y;break;}else if(y>35.)break;y+=f;}ve'
 	DB	'c3 B=vec3(0);if(y<35.){vec3 v=r(z);float i=clamp(dot(v,vec3(.'
@@ -225,8 +225,8 @@ CONST	SEGMENT
 ??_C@_06GGHJAEBN@static@ DB 'static', 00H		; `string'
 CONST	ENDS
 _DATA	SEGMENT
-?fragmentShader@@3PBDB DD FLAT:??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@ ; fragmentShader
-?imageShader@@3PBDB DD FLAT:??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ ; imageShader
+?fragmentShader@@3PBDB DD FLAT:??_C@_0MEE@FOHHDFJH@?$CDversion?5430?6uniform?5float?5v?$DLma@ ; fragmentShader
+?imageShader@@3PBDB DD FLAT:??_C@_0BLC@JIHBMBFH@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ ; imageShader
 ?screenSettings@@3U_devicemodeA@@A	ORG $+32		; screenSettings
 	DW	00H
 	DW	00H
@@ -243,7 +243,7 @@ _DATA	SEGMENT
 	ORG $+32
 	DW	00H
 	DD	020H
-	DD	0500H
+	DD	0a00H
 	DD	02d0H
 	DD	00H
 	DD	00H
@@ -309,7 +309,7 @@ _msg$ = -28						; size = 28
 	push	ebx
 	push	ebx
 	push	720					; 000002d0H
-	mov	ebp, 1280				; 00000500H
+	mov	ebp, 2560				; 00000a00H
 	push	ebp
 	push	ebx
 	push	ebx

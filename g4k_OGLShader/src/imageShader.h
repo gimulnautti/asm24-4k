@@ -11,7 +11,7 @@ static const char* imageShader = \
 "for(float f=-5.;f<=5.;f+=1.)"
 "for(float i=-5.;i<=5.;i+=1.)"
 "{"
-"vec4 r=texture2D(v,m+vec2(f,i)*(vec2(7)/vec2(1280,720)));"
+"vec4 r=texture2D(v,m+vec2(f,i)*(vec2(7)/vec2(2560,720)));"
 "if(max(r.x,max(r.y,r.z))>.8)"
 "{"
 "float v=length(vec2(f,i))+1.;"

@@ -1,0 +1,9 @@
+Zero Gravitas
+Assembly Summer '24 4k intro
+by Gimle
+ 
+Consider culture
+
+Techniques used:
+Shadertoy, Ctrl-Alt-Del Shader Minifier, Sointu Synthesizer & Tracker, OpenGL, iq's 4k Framework, 
+NASM, Crinkler, Visual Studio '22
