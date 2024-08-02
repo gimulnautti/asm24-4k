@@ -5,7 +5,7 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#define XRES        1920
-#define YRES        1080
+#define XRES        2560
+#define YRES        720
 
 #endif
