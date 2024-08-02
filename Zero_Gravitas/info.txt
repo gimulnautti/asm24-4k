@@ -3,7 +3,9 @@ Assembly Summer '24 4k intro
 by Gimle
  
 Consider culture
+Please wait 17 seconds for music rendering to finish
 
 Techniques used:
 Shadertoy, Ctrl-Alt-Del Shader Minifier, Sointu Synthesizer & Tracker, OpenGL, iq's 4k Framework, 
 NASM, Crinkler, Visual Studio '22
+
