@@ -76,7 +76,7 @@ void entrypoint( void )
 
     // full screen
     if( ChangeDisplaySettings(&screenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return; 
-    ShowCursor( 0 );
+ 
     // create window
     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
     HDC hDC = GetDC(hWnd);
@@ -116,6 +116,9 @@ void entrypoint( void )
     // init music
     su_render_song(music + 22);
     memcpy(music, wavHeader, 44);
+    
+    ShowCursor(0);
+    
     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
 
     MSG msg;
