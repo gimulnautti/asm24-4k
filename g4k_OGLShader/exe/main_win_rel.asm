@@ -9,8 +9,8 @@
 INCLUDELIB LIBCMT
 INCLUDELIB OLDNAMES
 
-PUBLIC	??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@ ; `string'
-PUBLIC	??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ ; `string'
+PUBLIC	??_C@_0ONB@IFODBBKO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@ ; `string'
+PUBLIC	??_C@_0BLM@BIHFLBJO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@ ; `string'
 PUBLIC	__fltused
 _BSS	SEGMENT
 __fltused DD	01H DUP (?)
@@ -54,73 +54,84 @@ CONST	SEGMENT
 	DD	061746164H
 	DD	0eed200H
 CONST	ENDS
-;	COMDAT ??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@
+;	COMDAT ??_C@_0BLM@BIHFLBJO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@
 CONST	SEGMENT
-??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ DB '#versi'
-	DB	'on 430', 0aH, 'varying vec2 m;uniform sampler2D v;vec4 x(vec2'
-	DB	' m){float p=1.;vec4 y=vec4(0);for(float f=-5.;f<=5.;f+=1.)for'
-	DB	'(float i=-5.;i<=5.;i+=1.){vec4 r=texture2D(v,m+vec2(f,i)*(vec'
-	DB	'2(7)/vec2(1280,720)));if(max(r.x,max(r.y,r.z))>.8){float v=le'
-	DB	'ngth(vec2(f,i))+1.;vec4 m=max(r*128./pow(v,2.),vec4(0));if(ma'
-	DB	'x(m.x,max(m.y,m.z))>.9)y+=m,p+=1.;}}return y/p;}void main(){v'
-	DB	'ec2 r=m.xy/vec2(2).xy+vec2(.5);gl_FragColor=texture2D(v,r)+.0'
-	DB	'5*x(r);}', 00H				; `string'
+??_C@_0BLM@BIHFLBJO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@ DB '#v'
+	DB	'ersion 330', 0aH, 'layout(location=0) out vec4 v;uniform samp'
+	DB	'ler2D m;vec4 x(vec2 v){float n=1.;vec4 f=vec4(0);for(float x='
+	DB	'-5.;x<=5.;x+=1.)for(float i=-5.;i<=5.;i+=1.){vec4 d=texture2D'
+	DB	'(m,v+vec2(x,i)*(vec2(7)/vec2(1920,1080)));if(max(d.x,max(d.y,'
+	DB	'd.z))>.8){float m=length(vec2(x,i))+1.;vec4 v=max(d*128./pow('
+	DB	'm,2.),vec4(0));if(max(v.x,max(v.y,v.z))>.9)f+=v,n+=1.;}}retur'
+	DB	'n f/n;}void main(){vec2 d=gl_FragCoord.xy/vec2(1920,1080);v=t'
+	DB	'exture(m,d)+.05*x(d);}', 00H		; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@
+;	COMDAT ??_C@_0ONB@IFODBBKO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@
 CONST	SEGMENT
-??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@ DB '#versi'
-	DB	'on 430', 0aH, 'uniform float v;mat3 n(float v){float f=sin(v)'
-	DB	';v=cos(v);return mat3(vec3(1,0,0),vec3(0,v,f),vec3(0,-f,v));}'
-	DB	'vec3 f;', 0aH, '#define BPS 0.50420168', 0aH, 'float n(){retu'
-	DB	'rn v+.05;}float s(float v){v*=BPS;return smoothstep(0.,1.,1.-'
-	DB	'mod(n(),v)/v);}float s(){float v=32.*BPS;return mod(n(),v)/v<'
-	DB	'.5?0.:1.;}float t(float v){v*=BPS;return n()<v?0.:1.;}float n'
-	DB	'(vec3 v,vec2 f){return length(vec2(length(v.xz)-f.x,v.y))-f.y'
-	DB	';}float s(vec3 v,vec3 f){v=abs(v)-f;return length(max(v,0.))+'
-	DB	'min(max(v.x,max(v.y,v.z)),0.);}vec3 t(vec3 v,vec3 f){return v'
-	DB	'-f*round(v/f);}float i(float v,float f){return max(v,-f);}voi'
-	DB	'd d(inout vec3 v,inout float f){float i=dot(v,v);if(i<1.7){fl'
-	DB	'oat m=1.7/i;v*=m;f*=m;}}void r(inout vec3 v,inout float f){v='
-	DB	'clamp(v,-1.,1.)*2.-v;}float d(vec3 m){f=m;float i=-.85-sin(v*'
-	DB	'.002)*.45;vec3 t=m;float s=20.;for(int v=0;v<13;v++)r(m,s),d('
-	DB	'm,s),m=i*m+t,s=s*abs(i)+1.;i=length(m);return i/abs(s);}float'
-	DB	' i(vec3 f){float m=d((f+vec3(30,cos(v*.0025)*30.,1))*(sin(v*.'
-	DB	'025)+1.5)*.025),c=6.+t(140.)*2.,y=2.5+t(128.)*3.-t(140.)*2.;m'
-	DB	'=min(i(m,n(f,vec2(c,y))),length(t(f+vec3(sin(v)*1.6,1.5,cos(v'
-	DB	')*1.6),vec3(6,5,6)))-.7);vec3 l=vec3(6,6,2)*(1.5-s()*.5);retu'
-	DB	'rn i(m,s(t(vec3(0,0,5.*sin(v*.1))+f*n(v*.1),vec3(10)),l));}ve'
-	DB	'c3 r(vec3 v){vec2 f=vec2(1,-1)*.5773;return normalize(f.xyy*i'
-	DB	'(v+f.xyy*5e-4)+f.yyx*i(v+f.yyx*5e-4)+f.yxy*i(v+f.yxy*5e-4)+f.'
-	DB	'xxx*i(v+f.xxx*5e-4));}float m(float v){vec3 f=fract(vec3(v)*.'
-	DB	'1031);f+=dot(f,f.yzx+19.19);return fract((f.x+f.y)*f.z);}floa'
-	DB	't m(vec3 v,vec3 f){float r=0.;for(int s=0;s<9;s++){float e=m('
-	DB	'float(s))*2.5;r+=(e-max(i(v+f*e),0.))/2.5*2.5;}return clamp(1'
-	DB	'.-r/9.,.05,1.);}vec3 x(vec3 v){float f=sin(v.x*7.)*.4+.6;retu'
-	DB	'rn vec3(1,f,f*.75);}int d(){return 4+int(t(128.))*3;}int i(){'
-	DB	'return 1+int(t(124.))*4-int(t(160.))*3;}float m(){return 6.-t'
-	DB	'(124.)*2.5;}vec3 e(float v){return vec3(mod(v,7.)/14.,mod(v,5'
-	DB	'.)/5.,.5+mod(v,3.)/6.);}vec2 h(vec3 f){float c=s(1.)*.05+.05+'
-	DB	't(120.)*.05,r=1e4,y=r,l=float(-d())*m()/2.+6.,z=0.;for(int e='
-	DB	'0;e<d();++e){float x=float(e);for(int e=0;e<i();++e){float n='
-	DB	'float(e+1);r=min(r,s(f+vec3(n*m()+3.*sin(v*.2*n)+cos(f.z*.5),'
-	DB	'l+m()*x+sin(f.z*.5),l+x*m()*2.*sin(v*.25*n)),vec3(c,c,4.+t(12'
-	DB	'0.)*6.)));if(r<y)z=float(i())*n+x,y=r;}}return vec2(r,z);}vec'
-	DB	'3 d(vec3 v,vec3 f,float m){float i=0.;vec3 r;float s=0.;for(i'
-	DB	'nt m=0;m<64;m++){r=f+i*v;vec2 c=h(r);float e=c.x;if(e<1e-4){s'
-	DB	'=c.y;break;}else if(i>15.)break;i+=e;}return i<15.&&i<m?e(s):'
-	DB	'vec3(0);}void main(){vec2 c=vec2(1280,720);c=(-c.xy+2.*gl_Fra'
-	DB	'gCoord.xy)/c.y;float y=.05*v+sin(v*.1)*c.y*sin(v*.05)*2.;y*=s'
-	DB	'()*2.-1.;vec3 l=vec3(8.*cos(y),.6,8.*sin(y)),n=normalize(vec3'
-	DB	'(0,sin(v*.5),0)-l),z=normalize(cross(n,vec3(0,.6,.5)));n=norm'
-	DB	'alize(c.x*z+c.y*normalize(cross(z,n))+1.5*n);y=0.;float t=1e5'
-	DB	',b=0.;for(int v=0;v<128;v++){z=l+y*n;float f=i(z);if(f<.00015'
-	DB	'){vec2 f=h(z);t=f.x;b=f.y;break;}else if(y>35.)break;y+=f;}ve'
-	DB	'c3 B=vec3(0);if(y<35.){vec3 v=r(z);float i=clamp(dot(v,vec3(.'
-	DB	'7,1.2,.4)),0.,1.2);i*=i;i*=i;i*=s(16.);float y=.5+.5*dot(v,ve'
-	DB	'c3(0,.8,-.6));y*=s(16.);B=vec3(.2,.3,.5)*y+x(f)*vec3(.9,.8,.6'
-	DB	')*i;B*=m(z,v);if(t<2.){float v=(2.-t)/2.;B+=v*v*v*e(b)*(s(1.)'
-	DB	'*.5+.5);}B/=max(1.,z.z*.5);}B=sqrt(B);B=B*.5+.5*B*B*(3.-2.*B)'
-	DB	';l=d(n,l,y);gl_FragColor=vec4(B,y)+vec4(l,0);}', 00H ; `string'
+??_C@_0ONB@IFODBBKO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@ DB '#v'
+	DB	'ersion 330', 0aH, 'layout(location=0) out vec4 f;uniform floa'
+	DB	't v;mat3 n(float v){float m=sin(v);v=cos(v);return mat3(vec3('
+	DB	'1,0,0),vec3(0,v,m),vec3(0,-m,v));}mat3 s(float v){float m=sin'
+	DB	'(v);v=cos(v);return mat3(vec3(v,0,m),vec3(0,1,0),vec3(-m,0,v)'
+	DB	');}mat3 t(float v){float m=sin(v);v=cos(v);return mat3(vec3(v'
+	DB	',m,0),vec3(-m,v,0),vec3(0,0,1));}vec3 i;', 0aH, '#define BPS '
+	DB	'0.50420168', 0aH, 'float n(){return v-.05;}float m(float v){v'
+	DB	'*=BPS;return smoothstep(0.,1.,1.-mod(n(),v)/v);}float m(){flo'
+	DB	'at v=32.*BPS;return mod(n(),v)/v<.5?0.:1.;}float r(float v){v'
+	DB	'*=BPS;return n()<v?0.:1.;}float m(vec3 v,vec2 m){return lengt'
+	DB	'h(vec2(length(v.xz)-m.x,v.y))-m.y;}float n(vec3 v,vec3 m){v=a'
+	DB	'bs(v)-m;return length(max(v,0.))+min(max(v.x,max(v.y,v.z)),0.'
+	DB	');}vec3 r(vec3 v,vec3 m){return v-m*round(v/m);}float s(float'
+	DB	' v,float m){return max(v,-m);}void t(inout vec3 v,inout float'
+	DB	' m){float f=dot(v,v);if(f<1.7){float c=1.7/f;v*=c;m*=c;}}void'
+	DB	' d(inout vec3 v,inout float m){v=clamp(v,-1.,1.)*2.-v;}float '
+	DB	'd(vec3 m){if(r(138.)>.9&&r(160.)<.9||r(368.)>.9)return 1e4;i='
+	DB	'm;float f=-.85-sin(v*.002)*.45;vec3 c=m;float s=20.;for(int v'
+	DB	'=0;v<13;v++)d(m,s),t(m,s),m=f*m+c,s=s*abs(f)+1.;f=length(m);r'
+	DB	'eturn f/abs(s);}float x(vec3 m){if(r(124.)>.9&&r(160.)<.9||r('
+	DB	'232.)>.9&&r(240.)<.9||r(256.)>.9&&r(272.)<.9||r(288.)>.9&&r(3'
+	DB	'04.)<.9||r(336.)>.9&&r(380.)<.9){vec3 f=vec3(6,0,0);float c=6'
+	DB	'.28/15.+sin(v*.35)*.1,i=1e4;for(float x=0.;x<3.;x+=1.)for(flo'
+	DB	'at y=0.;y<15.;y+=1.){vec3 l=m-vec3(0,-2.+x*2.,0),k=l-s(y*c+v*'
+	DB	'.65)*f;l=s(-c)*k;if(r(336.)>.9)l=n(v*.43)*t(v*.52)*l;i=min(i,'
+	DB	'n(l,vec3(.4)));}return i;}return 1e4;}float c(vec3 f){float i'
+	DB	'=d((f+vec3(30,cos(v*.0025)*30.,1))*(sin(v*.025)+1.5)*.025),c='
+	DB	'6.+r(140.)*2.,l=2.5+r(128.)*3.-r(140.)*2.;i=min(s(i,m(f,vec2('
+	DB	'c,l))),length(r(f+vec3(sin(v)*1.6,1.5,cos(v)*1.6),vec3(6,5,6)'
+	DB	'))-.7);vec3 y=vec3(6,6,2)*(1.5-m()*.5);l=s(i,n(r(vec3(0,0,5.*'
+	DB	'sin(v*.1))+f*n(v*.1),vec3(10)),y));return min(l,x(f));}vec3 e'
+	DB	'(vec3 v){vec2 m=vec2(1,-1)*.5773;return normalize(m.xyy*c(v+m'
+	DB	'.xyy*5e-4)+m.yyx*c(v+m.yyx*5e-4)+m.yxy*c(v+m.yxy*5e-4)+m.xxx*'
+	DB	'c(v+m.xxx*5e-4));}float h(float v){vec3 m=fract(vec3(v)*.1031'
+	DB	');m+=dot(m,m.yzx+19.19);return fract((m.x+m.y)*m.z);}float c('
+	DB	'vec3 v,vec3 m){float f=0.;for(int i=0;i<9;i++){float l=h(floa'
+	DB	't(i))*2.5;f+=(l-max(c(v+m*l),0.))/2.5*2.5;}return clamp(1.-f/'
+	DB	'9.,.05,1.);}vec3 p(vec3 v){float m=sin(v.x*7.)*.4+.6;return v'
+	DB	'ec3(1,m,m*.75);}int c(){return 4+int(r(128.))*3;}int d(){retu'
+	DB	'rn 1+int(r(124.))*4-int(r(160.))*3;}float e(){return 6.-r(124'
+	DB	'.)*2.5;}vec3 B(float v){return vec3(mod(v,7.)/14.,mod(v,5.)/5'
+	DB	'.,.5+mod(v,3.)/6.);}vec2 l(vec3 f){float i=m(1.)*.05+.05+r(12'
+	DB	'0.)*.05,l=1e4,s=l,x=float(-c())*e()/2.+6.,y=0.;for(int m=0;m<'
+	DB	'c();++m){float B=float(m);for(int m=0;m<d();++m){float c=floa'
+	DB	't(m+1);l=min(l,n(f+vec3(c*e()+3.*sin(v*.2*c)+cos(f.z*.5),x+e('
+	DB	')*B+sin(f.z*.5),x+B*e()*2.*sin(v*.25*c)),vec3(i,i,4.+r(120.)*'
+	DB	'6.)));if(l<s)y=float(d())*c+B,s=l;}}return vec2(l,y);}vec3 B('
+	DB	'vec3 v,vec3 m,float f){float i=0.;vec3 c;float r=0.;for(int f'
+	DB	'=0;f<64;f++){c=m+i*v;vec2 s=l(c);float y=s.x;if(y<1e-4){r=s.y'
+	DB	';break;}else if(i>15.)break;i+=y;}return i<15.&&i<f?B(r):vec3'
+	DB	'(0);}void main(){vec2 r=vec2(1920,1080);r=(-r.xy+2.*gl_FragCo'
+	DB	'ord.xy)/r.y;float y=.05*v+sin(v*.1)*r.y*sin(v*.05)*2.;y*=m()*'
+	DB	'2.-1.;vec3 s=vec3(8.*cos(y),.6,8.*sin(y)),x=normalize(vec3(0,'
+	DB	'sin(v*.5),0)-s),d=normalize(cross(x,vec3(0,.6,.5)));x=normali'
+	DB	'ze(r.x*d+r.y*normalize(cross(d,x))+1.5*x);y=0.;float n=1e5,z='
+	DB	'0.;for(int v=0;v<128;v++){d=s+y*x;float m=c(d);if(m<.00015){v'
+	DB	'ec2 m=l(d);n=m.x;z=m.y;break;}else if(y>35.)break;y+=m;}vec3 '
+	DB	'a=vec3(0);if(y<35.){vec3 v=e(d);float f=clamp(dot(v,vec3(.7,1'
+	DB	'.2,.4)),0.,1.2);f*=f;f*=f;f*=m(16.);float y=.5+.5*dot(v,vec3('
+	DB	'0,.8,-.6));y*=m(16.);a=vec3(.2,.3,.5)*y+p(i)*vec3(.9,.8,.6)*f'
+	DB	';a*=c(d,v);if(n<2.){float v=(2.-n)/2.;a+=v*v*v*B(z)*(m(1.)*.5'
+	DB	'+.5);}a/=max(1.,d.z*.5);}a=sqrt(a);a=a*.5+.5*a*a*(3.-2.*a);s='
+	DB	'B(x,s,y);f=vec4(a,y)+vec4(s,0);}', 00H	; `string'
 CONST	ENDS
 PUBLIC	?entrypoint@@YGXXZ				; entrypoint
 PUBLIC	??_C@_06GGHJAEBN@static@			; `string'
@@ -225,8 +236,8 @@ CONST	SEGMENT
 ??_C@_06GGHJAEBN@static@ DB 'static', 00H		; `string'
 CONST	ENDS
 _DATA	SEGMENT
-?fragmentShader@@3PBDB DD FLAT:??_C@_0MEE@DKCEDOIJ@?$CDversion?5430?6uniform?5float?5v?$DLma@ ; fragmentShader
-?imageShader@@3PBDB DD FLAT:??_C@_0BLC@JCMJLCHC@?$CDversion?5430?6varying?5vec2?5m?$DLuni@ ; imageShader
+?fragmentShader@@3PBDB DD FLAT:??_C@_0ONB@IFODBBKO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@ ; fragmentShader
+?imageShader@@3PBDB DD FLAT:??_C@_0BLM@BIHFLBJO@?$CDversion?5330?6layout?$CIlocation?$DN0?$CJ@ ; imageShader
 ?screenSettings@@3U_devicemodeA@@A	ORG $+32		; screenSettings
 	DW	00H
 	DW	00H
@@ -243,8 +254,8 @@ _DATA	SEGMENT
 	ORG $+32
 	DW	00H
 	DD	020H
-	DD	0500H
-	DD	02d0H
+	DD	0780H
+	DD	0438H
 	DD	00H
 	DD	00H
 	DD	00H
@@ -292,31 +303,26 @@ _msg$ = -28						; size = 28
 	test	eax, eax
 	jne	$LN1@entrypoint
 
-; 79   :     ShowCursor( 0 );
-
-	push	ebx
-	push	esi
-	push	edi
-	xor	ebx, ebx
-	push	ebx
-	call	DWORD PTR __imp__ShowCursor@4
-
+; 79   :  
 ; 80   :     // create window
 ; 81   :     HWND hWnd = CreateWindow( "static",0,WS_POPUP|WS_VISIBLE,0,0,XRES,YRES,0,0,0,0);
 
 	push	ebx
-	push	ebx
-	push	ebx
-	push	ebx
-	push	720					; 000002d0H
-	mov	ebp, 1280				; 00000500H
+	push	esi
+	push	edi
+	push	eax
+	push	eax
+	push	eax
+	push	eax
+	push	1080					; 00000438H
+	mov	ebp, 1920				; 00000780H
 	push	ebp
-	push	ebx
-	push	ebx
+	push	eax
+	push	eax
 	push	-1879048192				; 90000000H
-	push	ebx
+	push	eax
 	push	OFFSET ??_C@_06GGHJAEBN@static@
-	push	ebx
+	push	eax
 	call	DWORD PTR __imp__CreateWindowExA@48
 
 ; 82   :     HDC hDC = GetDC(hWnd);
@@ -420,7 +426,7 @@ _msg$ = -28						; size = 28
 	mov	eax, 6407				; 00001907H
 	push	eax
 	push	esi
-	push	720					; 000002d0H
+	push	1080					; 00000438H
 	push	ebp
 	push	eax
 	push	esi
@@ -480,7 +486,7 @@ _msg$ = -28						; size = 28
 
 ; 109  :     ((PFNGLRENDERBUFFERSTORAGEPROC)wglGetProcAddress("glRenderbufferStorage"))(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, XRES, YRES);
 
-	push	720					; 000002d0H
+	push	1080					; 00000438H
 	push	ebp
 	push	6402					; 00001902H
 	push	esi
@@ -533,42 +539,50 @@ _msg$ = -28						; size = 28
 
 	push	11					; 0000000bH
 	pop	ecx
-
-; 119  :     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
-
-	push	13					; 0000000dH
 	mov	esi, OFFSET ?wavHeader@@3QBHB
 	mov	edi, OFFSET ?music@@3PAFA
 	rep movsd
+
+; 119  :     
+; 120  :     ShowCursor(0);
+
+	mov	esi, DWORD PTR __imp__ShowCursor@4
+	push	0
+	call	esi
+
+; 121  :     
+; 122  :     sndPlaySound((const char*)&music, SND_ASYNC | SND_MEMORY | SND_LOOP);
+
+	push	13					; 0000000dH
 	push	OFFSET ?music@@3PAFA
 	call	DWORD PTR __imp__sndPlaySoundA@8
 
-; 120  : 
-; 121  :     MSG msg;
-; 122  :     long to = timeGetTime();
+; 123  : 
+; 124  :     MSG msg;
+; 125  :     long to = timeGetTime();
 
 	call	DWORD PTR __imp__timeGetTime@0
-	mov	esi, DWORD PTR __imp__glRects@16
-	mov	edi, DWORD PTR _hDC$1$[esp+80]
+	mov	edi, DWORD PTR __imp__glRects@16
+	mov	ebp, DWORD PTR _hDC$1$[esp+80]
 	mov	DWORD PTR _to$1$[esp+80], eax
-	mov	ebp, DWORD PTR _hWnd$1$[esp+80]
+	mov	esi, DWORD PTR _hWnd$1$[esp+80]
 $LL4@entrypoint:
 
-; 123  :     float currentTime = 0.f;
-; 124  :     float endTime = (SU_LENGTH_IN_SAMPLES * 2 + SU_SAMPLES_PER_ROW * SU_ROWS_PER_PATTERN * 7) / SU_SAMPLE_RATE;
-; 125  :     do 
-; 126  :     {
-; 127  :         PeekMessage(&msg,hWnd,0,0,true);
+; 126  :     float currentTime = 0.f;
+; 127  :     float endTime = (SU_LENGTH_IN_SAMPLES * 2 + SU_SAMPLES_PER_ROW * SU_ROWS_PER_PATTERN * 7) / SU_SAMPLE_RATE;
+; 128  :     do 
+; 129  :     {
+; 130  :         PeekMessage(&msg,hWnd,0,0,true);
 
 	push	1
 	push	0
 	push	0
-	push	ebp
+	push	esi
 	lea	eax, DWORD PTR _msg$[esp+96]
 	push	eax
 	call	DWORD PTR __imp__PeekMessageA@20
 
-; 128  :         currentTime = (float)(timeGetTime() - to) * 0.001f;
+; 131  :         currentTime = (float)(timeGetTime() - to) * 0.001f;
 
 	call	DWORD PTR __imp__timeGetTime@0
 	sub	eax, DWORD PTR _to$1$[esp+80]
@@ -578,8 +592,8 @@ $LL4@entrypoint:
 	fadd	DWORD PTR __real@4f800000
 $LN14@entrypoint:
 
-; 129  : 
-; 130  :         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, frameBufferId);
+; 132  : 
+; 133  :         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, frameBufferId);
 
 	push	DWORD PTR _frameBufferId$[esp+80]
 	fmul	DWORD PTR __real@3a83126f
@@ -589,14 +603,14 @@ $LN14@entrypoint:
 	call	ebx
 	call	eax
 
-; 131  :         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
+; 134  :         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(fsId);
 
 	push	DWORD PTR _fsId$1$[esp+80]
 	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
 	call	ebx
 	call	eax
 
-; 132  :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
+; 135  :         ((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(0, currentTime);
 
 	fld	DWORD PTR _currentTime$1$[esp+80]
 	push	ecx
@@ -606,16 +620,16 @@ $LN14@entrypoint:
 	call	ebx
 	call	eax
 
-; 133  :         glRects( -1, -1, 1, 1 );
+; 136  :         glRects( -1, -1, 1, 1 );
 
 	push	1
 	push	1
 	push	-1
 	push	-1
-	call	esi
+	call	edi
 
-; 134  : 
-; 135  :         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, 0);
+; 137  : 
+; 138  :         ((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, 0);
 
 	push	0
 	push	36160					; 00008d40H
@@ -623,40 +637,40 @@ $LN14@entrypoint:
 	call	ebx
 	call	eax
 
-; 136  :         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(imgFsId);
+; 139  :         ((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(imgFsId);
 
 	push	DWORD PTR _imgFsId$1$[esp+80]
 	push	OFFSET ??_C@_0N@ICBDHBI@glUseProgram@
 	call	ebx
 	call	eax
 
-; 137  :         glBindTexture(GL_TEXTURE_2D, renderTexture);
+; 140  :         glBindTexture(GL_TEXTURE_2D, renderTexture);
 
 	push	DWORD PTR _renderTexture$[esp+80]
 	push	3553					; 00000de1H
 	call	DWORD PTR __imp__glBindTexture@8
 
-; 138  :         glRects(-1, -1, 1, 1);
+; 141  :         glRects(-1, -1, 1, 1);
 
 	push	1
 	push	1
 	push	-1
 	push	-1
-	call	esi
+	call	edi
 
-; 139  : 
-; 140  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE );
+; 142  : 
+; 143  :         wglSwapLayerBuffers( hDC, WGL_SWAP_MAIN_PLANE );
 
 	push	1
-	push	edi
+	push	ebp
 	call	DWORD PTR __imp__wglSwapLayerBuffers@8
 
-; 141  :         Sleep(1);
+; 144  :         Sleep(1);
 
 	push	1
 	call	DWORD PTR __imp__Sleep@4
 
-; 142  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
+; 145  :     }while( (msg.message!=WM_KEYDOWN || msg.wParam!=VK_ESCAPE) && currentTime < endTime);
 
 	cmp	DWORD PTR _msg$[esp+84], 256		; 00000100H
 	jne	SHORT $LN7@entrypoint
@@ -670,8 +684,8 @@ $LN7@entrypoint:
 	jnp	$LL4@entrypoint
 $LN6@entrypoint:
 
-; 143  : 
-; 144  :     ChangeDisplaySettings( 0, 0 );
+; 146  : 
+; 147  :     ChangeDisplaySettings( 0, 0 );
 
 	mov	ebp, DWORD PTR __imp__ChangeDisplaySettingsA@8
 	xor	ebx, ebx
@@ -679,13 +693,14 @@ $LN6@entrypoint:
 	push	ebx
 	call	ebp
 
-; 145  :     ShowCursor(1);
+; 148  :     ShowCursor(1);
 
+	mov	esi, DWORD PTR __imp__ShowCursor@4
 	push	1
-	call	DWORD PTR __imp__ShowCursor@4
+	call	esi
 
-; 146  : 
-; 147  :     ExitProcess(0);
+; 149  : 
+; 150  :     ExitProcess(0);
 
 	push	ebx
 	call	DWORD PTR __imp__ExitProcess@4
@@ -696,7 +711,7 @@ $LN17@entrypoint:
 $LN1@entrypoint:
 	pop	ebp
 
-; 148  : }
+; 151  : }
 
 	add	esp, 64					; 00000040H
 	ret	0
