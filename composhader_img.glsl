@@ -1,10 +1,10 @@
-#version 430
-varying vec2 fragCoord;
+#version 330
+layout(location = 0) out vec4 fragColor;
 uniform sampler2D gm_BaseTexture;
 
 vec2 px()
 {
-    return vec2(7.) / vec2(1280,720);
+    return vec2(7.) / vec2(1920,1080);
 }
 
 vec4 GetBloom ( in vec2 uv )
@@ -38,8 +38,7 @@ vec4 GetBloom ( in vec2 uv )
 
 void main( void )
 {
-    vec2 iResolution = vec2(2.,2.);
-    vec2 uv=fragCoord.xy/iResolution.xy + vec2(.5,.5);
-    vec4 box = texture2D(gm_BaseTexture, uv);
-    gl_FragColor = box + .05 * GetBloom(uv);
+    vec2 uv = gl_FragCoord.xy / vec2(1920,1080);
+    vec4 box = texture(gm_BaseTexture, uv);
+    fragColor = box + .05 * GetBloom(uv);
 }

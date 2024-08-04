@@ -1,4 +1,5 @@
-#version 430
+#version 330
+layout(location = 0) out vec4 fragColor;
 uniform float iGlobalTime; 
 // nice times 2223
 
@@ -17,7 +18,7 @@ vec3 mandelboxPosition;
 
 float tt()
 {
-    return iGlobalTime + 0.05;
+    return iGlobalTime - 0.05;
 }
 
 float revsaw(float beats)
@@ -379,5 +380,5 @@ void main( void )
 
     vec3 ribs = ribbons( rd, ro, t );
 
-    gl_FragColor = vec4( col, t ) + vec4(ribs, 0.);
+    fragColor = vec4( col, t ) + vec4(ribs, 0.);
 }
